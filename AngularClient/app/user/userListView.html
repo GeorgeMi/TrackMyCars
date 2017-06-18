@@ -1,0 +1,70 @@
+<div ng-controller="UserController as ctrl">
+    <div class="panel panel-default">
+        <div class="panel-heading">Users per page</div>
+        <div class="panel-body">
+            <select class="form-control" ng-model="ctrl.itemsPerPage" ng-click="ctrl.chosePerPage()" placeholder="Polls per page">
+                <option>1</option>
+                <option>5</option>
+                <option>10</option>
+                <option>15</option>
+                <option>20</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Search user</div>
+        <div class="panel-body">
+            <label class="control-label col-sm-2">Search:</label>
+            <div class="col-sm-8">
+                <input type="text" ng-model="searchText" class="form-control" placeholder="Search">
+            </div>
+
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">All users</div>
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                    <tr >
+                        <td class="mobileHidden">ID</td>
+                        <td>Username</td>
+                        <!-- <td class="mobileHidden">Password</td> -->
+                        <td class="mobileHidden">Email</td>
+                        <td>Role</td>
+                        <td>Actions</td>
+                    </tr>
+                </thead>
+                <tbody >
+                    <tr ng-repeat="user in ctrl.users  | filter:searchText">
+                        <td class="mobileHidden">{{ user.UserID}}</td>
+                        <td>{{ user.Username }}</td>
+                       <!-- <td class="mobileHidden">{{ user.Password }}</td> -->
+                        <td class="mobileHidden">{{ user.Email }}</td>
+                        <td>{{ user.Role }}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button ng-if="user.Role =='admin' && user.Username != 'Admin'" class="btn btn-default" ng-click="ctrl.demote(user.UserID)">Demote&nbsp;</button>
+                                <button ng-if="user.Role =='user' && user.Username != 'Admin'" class="btn btn-default" ng-click="ctrl.promote(user.UserID)">Promote</button>
+                                <button class="btn btn-default" ng-click="vm.changePage(ctrl.viewSendMessage(user.UserID, user.Username))">Send message</button>
+                                <button ng-if="user.Username != 'Admin'" class="btn btn-default" ng-click="ctrl.deleteUser(user.UserID)">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-sm-8 col-sm-offset-2">
+        <div ng-if="ctrl.message" class="alert alert-info" role="alert">{{ctrl.message}}</div>
+    </div>
+    <nav>
+        <ul class="pager col-sm-12">
+            <li><a href="" ng-if="ctrl.Prev" ng-click="ctrl.chosePageNr(ctrl.page_nr - 1)">Previous page</a></li>
+            <li><a href="" ng-if="ctrl.Next" ng-click="ctrl.chosePageNr(ctrl.page_nr + 1)">Next page</a></li>
+        </ul>
+    </nav>
+</div>
+

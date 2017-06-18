@@ -1,0 +1,16 @@
+﻿.footer {
+    text-align: center;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    text-decoration: none;
+    background-color: #EDEDED;
+    width: 100%;
+}
+
+    .footer a {
+        color: #2F3E47;
+    }
+
+    .footer .navbar-default {
+        border: none;
+    }

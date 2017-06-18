@@ -1,0 +1,57 @@
+﻿<div class="panel panel-default" ng-controller="ContactAdminRedirectController as ctrl">
+    <div class="panel-heading">Contact Us</div>
+    <div class="panel-body">
+
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="pwd">To:</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" ng-model="ctrl.receiverUsername" disabled>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="pwd">Category:</label>
+                <div class="col-sm-8">
+                    <select class="form-control" ng-model="ctrl.contact.category" required>
+                        <option value="Message">Message</option>
+                        <option value="Warning">Warning</option>
+                        <option value="Praise">Praise</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="email">Message:</label>
+                <div class="col-sm-8">
+                    <textarea class="form-control" rows="8" ng-model="ctrl.contact.message" required></textarea>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-sm-3 col-sm-offset-2">
+                    <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-primary" type="submit" ng-click="ctrl.sendUserMessage()">Send message</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <div ng-if="ctrl.sent == 'success'" class="alert alert-success" role="alert">{{ctrl.messageContact}}</div>
+                    <div ng-if="ctrl.sent == 'fail'" class="alert alert-danger" role="alert">{{ctrl.messageContact}}</div>
+                </div>
+            </div>
+        </form>
+
+        <div class="col-sm-2">
+            <div class="btn-group btn-group-justified">
+                <div class="btn btn-default" ng-click="vm.backPage()">Back</div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,284 @@
+﻿[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}
+
+body {
+    color: #2F3E47;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.list-group {
+    margin-bottom: 0;
+}
+
+.alert {
+    text-align: center;
+}
+
+.navbar {
+    margin-bottom: 0;
+    border-bottom-left-radius: 0;
+    text-decoration: none;
+    background-color: #EDEDED;
+}
+
+.navbar-default .navbar-brand {
+    color: #2F3E47;
+}
+
+.nav a {
+    color: #2F3E47;
+}
+
+.navbar-default .navbar-text {
+    color: #2F3E47;
+}
+
+.groupPerPagePanel {
+    float: none;
+    padding-bottom: 80px;
+}
+
+#sidebar-wrapper {
+    height: 110%;
+    background: #2F3E47;
+    padding-top: 10px;
+    color: white;
+    width: 20%;
+}
+
+#messageLogIn {
+    position: absolute;
+}
+
+.contentHidden {
+    display: none;
+}
+
+
+#page-content-wrapper {
+    width: 79%;
+    padding-top: 10px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.sidebar-nav {
+    padding: 0;
+    list-style: none;
+}
+
+    .sidebar-nav li {
+        text-indent: 20px;
+        line-height: 40px;
+    }
+
+        .sidebar-nav li a {
+            display: block;
+            text-decoration: none;
+            color: #ddd;
+        }
+
+            .sidebar-nav li a:hover {
+                background-color: #16A085;
+            }
+
+
+.doughnut-legend {
+    width: 10%;
+}
+
+#wrapper {
+    height: 100vh;
+}
+
+.desktopHidden {
+    display: none;
+}
+
+.mobileNav {
+    display: inline-block;
+}
+
+
+.mobileSideBarVisible {
+    width: 20%;
+    display: inline-block;
+}
+
+.sideBarHidden {
+    display: none;
+}
+
+.contentHidden {
+    display: none;
+}
+
+textarea {
+    resize: none;
+}
+
+#questionDelete {
+    float: right;
+    width: 8%;
+}
+
+
+#answerDelete {
+    float: right;
+    width: 8%;
+}
+
+#questionString {
+    width: 90%;
+    padding-left: 0;
+}
+
+#answerString {
+    width: 90%;
+    padding-left: 0;
+}
+
+.pollQuestionPanel {
+    margin: 0 auto;
+    float: none;
+}
+
+.btnVotedViewResults {
+    width: 100%;
+}
+/* Smartphones (portrait) ----------- */
+@media only screen and (max-width : 700px) {
+
+    .groupPerPagePanel {
+        padding-bottom: 25px;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    #sidebar-wrapper {
+        width: 100%;
+        height: 100vh;
+    }
+
+    .navbar-brand {
+        width: 80%;
+        text-align: center;
+        float: right;
+        // margin: 0 auto;
+        display: inline-block;
+    }
+
+    .navbar-form {
+        width: 100%;
+        margin: 0px 0px;
+        text-align: center;
+    }
+
+    #loginBtn {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    #registerBtn {
+        text-align: center;
+    }
+
+    .mobileHidden {
+        display: none !important;
+    }
+
+
+    #page-content-wrapper {
+        padding-left: 0%;
+        width: 100%;
+    }
+
+    .glyphicon {
+        width: 20%;
+        float: left;
+    }
+
+    .navbar-form {
+        margin-top: 30px;
+    }
+
+    .mobileNav {
+        padding-top: 15px;
+        display: block;
+        width: 100%;
+    }
+
+    .desktopHidden {
+        display: inline-block;
+    }
+
+    .mobileSideBarVisible {
+        width: 100%;
+    }
+
+    #questionString {
+        width: 85%;
+        display: inline-block;
+        padding: 0;
+    }
+
+    #answerString {
+        width: 85%;
+        display: inline-block;
+        padding: 0;
+    }
+
+    #questionDelete {
+        width: 10%;
+    }
+
+
+    #answerDelete {
+        width: 10%;
+    }
+
+    .brandName {
+        width: 100%;
+    }
+
+
+    .loadingGif {
+        position: fixed;
+        top: 30%;
+        left: 40%;
+    }
+
+    #messageLogIn {
+        position: relative;
+        width: 100%;
+    }
+}
+
+/*desktop */
+@media only screen and (min-width : 710px) {
+    .mobileSideBarVisible {
+        width: 20%;
+        display: inline-block;
+    }
+
+    .navbar-right {
+        margin-right: 0;
+    }
+}
+
+@media only screen and (max-width : 800px) {
+    .mobileHidden {
+        display: none !important;
+    }
+}
+
+
