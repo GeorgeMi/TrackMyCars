@@ -28,7 +28,7 @@
                 </div>
 
                 <div ng-if="vm.isLoggedIn" class="navbar-brand ">Track my cars</div>
-                <div ng-hide="vm.isLoggedIn" class="navbar-brand brandName">Track my cars</div>
+                <div ng-hide="vm.isLoggedIn" class="navbar-brand brandName"> Track my cars</div>
             </div>
             <div class="nav navbar-nav navbar-right">
                 <form ng-hide="vm.isLoggedIn" class="navbar-form navbar-right">
@@ -57,7 +57,9 @@
     <!-- Container -->
     <div class="container">
         <form class="form-horizontal" role="form" ng-hide="vm.isLoggedIn">
-            <center><h2>Register</h2></center>
+            <center>
+                <img src="images/logo.png" />
+            </center>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="username">Username:</label>
                 <div class="col-sm-10">
@@ -103,6 +105,8 @@
                 <li ng-click="vm.changePage('contact')"><a href="/#">Contact</a></li>
                 <li ng-click="vm.logout()"><a href="">Log out</a></li>
                 <li><hr></li>
+                <li ng-click="vm.changePage('my_polls')"><a href="/#/my_polls">My Cars</a></li>
+                <li ng-click="vm.changePage('my_polls')"><a href="/#/my_polls">Utilities</a></li>
                 <li ng-click="vm.changePage('my_polls')"><a href="/#/my_polls">My polls</a></li>
                 <li ng-click="vm.changePage('voted_polls')"><a href="/#/voted_polls">Voted polls</a></li>
                 <li ng-click="vm.changePage('search_polls')"><a href="/#/my_polls">Search polls</a></li>
@@ -115,6 +119,8 @@
                 <li><h4>Admin</h4></li>
                 <li ng-click="vm.changePage('contact_admin')"><a href="/#/contact_admin">Send message</a></li>
                 <li ng-click="vm.changePage('manage_users')"><a href="/#/manage_users">Manage Users</a></li>
+                <li ng-click="vm.changePage('manage_users')"><a href="/#/manage_users">Manage Cars</a></li>
+                <li ng-click="vm.changePage('manage_users')"><a href="/#/manage_users">Manage Utilities</a></li>
                 <li ng-click="vm.changePage('manage_polls')"><a href="/#/manage_polls">Manage Polls</a></li>
                 <li ng-click="vm.changePage('manage_categories')"><a href="/#/manage_categories">Manage Categories</a></li>
 
