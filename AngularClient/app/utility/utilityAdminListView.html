@@ -1,0 +1,68 @@
+﻿<div ng-controller="UtilityController as vm" >
+    <div class="panel panel-default">
+        <div class="panel-heading">Add new utility</div>
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <div class="form-group ">
+                    <label class="control-label col-sm-2">Utility Name:</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" placeholder="Utility Name" ng-model="vm.utility.name" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <button type="submit" class="btn btn-default" ng-click="vm.addUtility()">Add utility</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Search utility</div>
+        <div class="panel-body">
+            <label class="control-label col-sm-2">Search:</label>
+            <div class="col-sm-8">
+                <input type="text" ng-model="searchText" class="form-control" placeholder="Search">
+            </div>
+
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">All utilities</div>
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>ID</td>
+                        <td>Name</td>
+                        <td>Distance (KM)</td>
+                        <td>Period (Months)</td>
+                        <td>Description</td>
+                        <td>Action</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="utility in vm.utilities  | filter:searchText">
+                        <td>{{ utility.UtilityID}}</td>
+                        <td>{{ utility.Name }}</td>
+                        <td>{{ utility.KmNo }}</td>
+                        <td>{{ utility.MonthsNo }}</td>
+                        <td>{{ utility.Description }}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button class="btn btn-default" ng-click="vm.deleteUtility(utility.UtilityID)">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-sm-8 col-sm-offset-2">
+        <div ng-if="ctrl.message" class="alert alert-info" role="alert">{{ctrl.message}}</div>
+    </div>
+</div>

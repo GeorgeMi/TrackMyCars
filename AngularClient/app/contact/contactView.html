@@ -1,10 +1,9 @@
-﻿<div ng-controller="ContactController as ctrl" >
-    <div class="panel panel-default" ng-controller="CategoryController as cat">
+﻿<div ng-controller="ContactController as ctrl">
+    <div class="panel panel-default">
         <div class="panel-heading">Contact Us</div>
         <div class="panel-body">
-
             <form class="form-horizontal">
-                
+
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="pwd">Category:</label>
                     <div class="col-sm-8">
@@ -32,7 +31,7 @@
                                 <button class="btn btn-primary" type="submit" ng-click="ctrl.sendUserMessage()">Send message</button>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
 
@@ -42,14 +41,14 @@
                         <div ng-if="ctrl.sent == 'fail'" class="alert alert-danger" role="alert">{{ctrl.messageContact}}</div>
                     </div>
                 </div>
-                
+
             </form>
             <div class="col-sm-2">
                 <div class="btn-group btn-group-justified">
-                     <div class="btn btn-default" ng-click="vm.backPage()">Back</div>
+                    <div class="btn btn-default" ng-click="vm.backPage()">Back</div>
                 </div>
             </div>
-           
+
         </div>
     </div>
 </div>

@@ -8,7 +8,7 @@
     {
         var vm = this;
 
-        vm.isLoggedIn = false;
+        vm.isLoggedIn = true;
         $rootScope.isLoading = false; //loading gif
         $rootScope.isLoadingRegister = false; //loading gif
         vm.isQuery = false;
@@ -17,7 +17,7 @@
         vm.messageFailedRegistration = '';
         vm.messageLogIn = '';
         vm.message = '';
-        vm.role = '';
+        vm.role = 'admin';
 
         //data for login
         vm.userData = {
@@ -41,14 +41,13 @@
             home: true,
             my_polls: false,
             my_poll_result: false,
-            categories: false,
+            utilities: false,
             new_poll: false,
+            new_car: false,
             manage_users: false,
             manage_polls: false,
-            manage_categories: false,
-            vote_poll: false,
-            voted_polls: false,
-            category_forms: false,
+            manage_utilities: false,
+            utility_forms: false,
             contact: false,
             search_polls: false,
             contact_admin: false,
@@ -192,16 +191,14 @@
             vm.isLoggedIn = false;
 
             vm.pages.home = false;
-            vm.pages.categories = false;
-            vm.pages.my_poll_result = false;
+            vm.pages.utilities = false;
             vm.pages.my_polls = false;
             vm.pages.new_poll = false;
+            vm.pages.new_car = false;
             vm.pages.manage_users = false;
             vm.pages.manage_polls = false;
-            vm.pages.manage_categories = false;
-            vm.pages.vote_poll = false;
-            vm.pages.voted_polls = false;
-            vm.pages.category_forms = false;
+            vm.pages.manage_utilities = false;
+            vm.pages.utility_forms = false;
             vm.pages.contact = false;
             vm.pages.search_polls = false;
             vm.pages.contact_admin = false;
@@ -215,16 +212,15 @@
             $(".mobileSideBarVisible").addClass("sideBarHidden");
             vm.ok = 1; // mypage este valid
             vm.pages.home = false;
-            vm.pages.categories = false;
-            vm.pages.category_forms = false;
+            vm.pages.utilities = false;
+            vm.pages.utility_forms = false;
             vm.pages.my_polls = false;
             vm.pages.my_poll_result = false;
             vm.pages.new_poll = false;
+            vm.pages.new_car = false;
             vm.pages.manage_users = false;
             vm.pages.manage_polls = false;
-            vm.pages.manage_categories = false;
-            vm.pages.vote_poll = false;
-            vm.pages.voted_polls = false;
+            vm.pages.manage_utilities = false;
             vm.pages.contact = false;
             vm.pages.search_polls = false;
             vm.pages.contact_admin = false;
@@ -234,8 +230,8 @@
                 vm.pages.home = true;
                 vm.ok = 1;
             }
-            else if (mypage == 'categories') {
-                vm.pages.categories = true;
+            else if (mypage == 'utilities') {
+                vm.pages.utilities = true;
                 vm.ok = 1;
             }
             else if (mypage == 'my_polls') {
@@ -246,6 +242,10 @@
                 vm.pages.new_poll = true;
                 vm.ok = 0;
             }
+            else if (mypage == 'new_car') {
+                vm.pages.new_car = true;
+                vm.ok = 0;
+            }
             else if (mypage == 'manage_users') {
                 vm.pages.manage_users = true;
                 vm.ok = 1;
@@ -254,24 +254,12 @@
                 vm.pages.manage_polls = true;
                 vm.ok = 1;
             }
-            else if (mypage == 'manage_categories') {
-                vm.pages.manage_categories = true;
+            else if (mypage == 'manage_utilities') {
+                vm.pages.manage_utilities = true;
                 vm.ok = 1;
             }
-            else if (mypage == 'vote_poll') {
-                vm.pages.vote_poll = true;
-                vm.ok = 0;
-            }
-            else if (mypage == 'my_poll_result') {
-                vm.pages.my_poll_result = true;
-                vm.ok = 0;
-            }
-            else if (mypage == 'voted_polls') {
-                vm.pages.voted_polls = true;
-                vm.ok = 1;
-            }
-            else if (mypage == 'category_forms') {
-                vm.pages.category_forms = true;
+            else if (mypage == 'utility_forms') {
+                vm.pages.utility_forms = true;
                 vm.ok = 0;
             }
             else if (mypage == 'contact') {
@@ -310,12 +298,6 @@
             temp = vm.pagesArray.last;
             vm.pagesArray.last = vm.pagesArray.current;
             vm.pagesArray.current = temp;
-        }
-
-        vm.changeID = function (id) {
-            // alert("cookie");
-            $cookies.put('last_poll', id);
-            return 'vote_poll';
         }
 
         //------------------verify mail---------------------

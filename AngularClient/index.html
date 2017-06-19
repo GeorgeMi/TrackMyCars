@@ -106,11 +106,8 @@
                 <li ng-click="vm.logout()"><a href="">Log out</a></li>
                 <li><hr></li>
                 <li ng-click="vm.changePage('my_polls')"><a href="/#/my_polls">My Cars</a></li>
-                <li ng-click="vm.changePage('my_polls')"><a href="/#/my_polls">Utilities</a></li>
-                <li ng-click="vm.changePage('my_polls')"><a href="/#/my_polls">My polls</a></li>
-                <li ng-click="vm.changePage('voted_polls')"><a href="/#/voted_polls">Voted polls</a></li>
+                <li ng-click="vm.changePage('utilities')"><a href="/#/utilities">Utilities</a></li>
                 <li ng-click="vm.changePage('search_polls')"><a href="/#/my_polls">Search polls</a></li>
-                <li ng-click="vm.changePage('categories')"><a href="/#/categories">Categories</a></li>
                 <li ng-click="vm.changePage('new_poll')"><a href="/#/new_poll">Add new poll</a></li>
             </ul>
 
@@ -120,10 +117,9 @@
                 <li ng-click="vm.changePage('contact_admin')"><a href="/#/contact_admin">Send message</a></li>
                 <li ng-click="vm.changePage('manage_users')"><a href="/#/manage_users">Manage Users</a></li>
                 <li ng-click="vm.changePage('manage_users')"><a href="/#/manage_users">Manage Cars</a></li>
-                <li ng-click="vm.changePage('manage_users')"><a href="/#/manage_users">Manage Utilities</a></li>
+                <li ng-click="vm.changePage('manage_utilities')"><a href="/#/manage_utilities">Manage Utilities</a></li>
                 <li ng-click="vm.changePage('manage_polls')"><a href="/#/manage_polls">Manage Polls</a></li>
-                <li ng-click="vm.changePage('manage_categories')"><a href="/#/manage_categories">Manage Categories</a></li>
-
+                <li ng-click="vm.changePage('new_car')"><a href="/#/new_car">Add new car</a></li>
             </ul>
         </div>
 
@@ -134,16 +130,13 @@
                     <div ng-if="vm.isLoggedIn" class="col-sm-12">
                         <div ng-if="vm.pages.home" ng-include="'app/form/formListView.html'">home</div>
                         <div ng-if="vm.pages.contact" ng-include="'app/contact/contactView.html'">contact</div>
-                        <div ng-if="vm.pages.categories" ng-include="'app/category/categoryUserListView.html'">categories</div>
-                        <div ng-if="vm.pages.category_forms" ng-include="'app/formCategory/formCategoryListView.html'">category_forms</div>
+                        <div ng-if="vm.pages.utilities" ng-include="'app/utility/utilityUserListView.html'">utilities</div>
                         <div ng-if="vm.pages.my_polls" ng-include="'app/formUser/formListUsersFormsView.html'">my_polls</div>
-                        <div ng-if="vm.pages.my_poll_result" ng-include="'app/formResult/formResultView.html'">my_poll_result</div>
                         <div ng-if="vm.pages.new_poll" ng-include="'app/form/formAddView.html'">new_poll</div>
-                        <div ng-if="vm.pages.vote_poll" ng-include="'app/formVote/formVoteView.html'">vote_poll</div>
-                        <div ng-if="vm.pages.voted_polls" ng-include="'app/formVoted/formVotedListView.html'">voted_polls</div>
+                        <div ng-if="vm.pages.new_car" ng-include="'app/car/carAddView.html'">new_car</div>
                         <div ng-if="vm.pages.manage_users" ng-include="'app/user/userListView.html'"></div>
                         <div ng-if="vm.pages.manage_polls" ng-include="'app/form/formListAdminView.html'">manage_polls</div>
-                        <div ng-if="vm.pages.manage_categories" ng-include="'app/category/categoryAdminListView.html'">manage_categories</div>
+                       <div ng-if="vm.pages.manage_utilities" ng-include="'app/utility/utilityAdminListView.html'">manage_utilities</div>
                         <div ng-if="vm.pages.search_polls" ng-include="'app/formSearch/formSearchView.html'">search_polls</div>
                         <div ng-if="vm.pages.contact_admin" ng-include="'app/contact/contactAdminView.html'">contact_admin</div>
                         <div ng-if="vm.pages.contact_admin_redirect" ng-include="'app/contact/contactAdminRedirectView.html'">contact_admin_redirect</div>
@@ -218,20 +211,18 @@
     <script src="common/common.services.js"></script>
     <script src="common/userResource.js"></script>
     <script src="common/userAccount.js"></script>
-    <script src="common/categoryResource.js"></script>
+    <script src="common/utilityResource.js"></script>
     <script src="common/formResource.js"></script>
+    <script src="common/carResource.js"></script>
     <script src="common/contactResource.js"></script>
 
     <!-- Product Controllers -->
     <script src="app/mainController.js"></script>
     <script src="app/user/userController.js"></script>
-    <script src="app/category/categoryController.js"></script>
+    <script src="app/utility/utilityController.js"></script>
     <script src="app/form/formController.js"></script>
-    <script src="app/formVote/formVoteController.js"></script>
+    <script src="app/car/carController.js"></script>
     <script src="app/formUser/formUserController.js"></script>
-    <script src="app/formResult/formResultController.js"></script>
-    <script src="app/formVoted/formVotedController.js"></script>
-    <script src="app/formCategory/formCategoryController.js"></script>
     <script src="app/contact/contactController.js"></script>
     <script src="app/formSearch/formSearchController.js"></script>
     <script src="app/user/usernameListController.js"></script>
