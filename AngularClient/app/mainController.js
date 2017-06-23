@@ -46,6 +46,7 @@
             new_car: false,
             manage_users: false,
             manage_polls: false,
+            manage_cars: false,
             manage_utilities: false,
             utility_forms: false,
             contact: false,
@@ -197,6 +198,7 @@
             vm.pages.new_car = false;
             vm.pages.manage_users = false;
             vm.pages.manage_polls = false;
+            vm.pages.manage_cars = false;
             vm.pages.manage_utilities = false;
             vm.pages.utility_forms = false;
             vm.pages.contact = false;
@@ -220,6 +222,7 @@
             vm.pages.new_car = false;
             vm.pages.manage_users = false;
             vm.pages.manage_polls = false;
+            vm.pages.manage_cars = false;
             vm.pages.manage_utilities = false;
             vm.pages.contact = false;
             vm.pages.search_polls = false;
@@ -252,6 +255,10 @@
             }
             else if (mypage == 'manage_polls') {
                 vm.pages.manage_polls = true;
+                vm.ok = 1;
+            }
+            else if (mypage == 'manage_cars') {
+                vm.pages.manage_cars = true;
                 vm.ok = 1;
             }
             else if (mypage == 'manage_utilities') {

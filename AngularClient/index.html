@@ -114,12 +114,10 @@
             <ul ng-if="vm.role == 'admin'" class="sidebar-nav">
                 <li><hr></li>
                 <li><h4>Admin</h4></li>
-                <li ng-click="vm.changePage('contact_admin')"><a href="/#/contact_admin">Send message</a></li>
-                <li ng-click="vm.changePage('manage_users')"><a href="/#/manage_users">Manage Users</a></li>
-                <li ng-click="vm.changePage('manage_users')"><a href="/#/manage_users">Manage Cars</a></li>
+                <li ng-click="vm.changePage('manage_cars')"><a href="/#/manage_cars">Manage Cars</a></li>
                 <li ng-click="vm.changePage('manage_utilities')"><a href="/#/manage_utilities">Manage Utilities</a></li>
-                <li ng-click="vm.changePage('manage_polls')"><a href="/#/manage_polls">Manage Polls</a></li>
-                <li ng-click="vm.changePage('new_car')"><a href="/#/new_car">Add new car</a></li>
+                <li ng-click="vm.changePage('manage_users')"><a href="/#/manage_users">Manage Users</a></li>
+                <li ng-click="vm.changePage('contact_admin')"><a href="/#/contact_admin">Send message</a></li>
             </ul>
         </div>
 
@@ -133,9 +131,9 @@
                         <div ng-if="vm.pages.utilities" ng-include="'app/utility/utilityUserListView.html'">utilities</div>
                         <div ng-if="vm.pages.my_polls" ng-include="'app/formUser/formListUsersFormsView.html'">my_polls</div>
                         <div ng-if="vm.pages.new_poll" ng-include="'app/form/formAddView.html'">new_poll</div>
-                        <div ng-if="vm.pages.new_car" ng-include="'app/car/carAddView.html'">new_car</div>
                         <div ng-if="vm.pages.manage_users" ng-include="'app/user/userListView.html'"></div>
                         <div ng-if="vm.pages.manage_polls" ng-include="'app/form/formListAdminView.html'">manage_polls</div>
+                        <div ng-if="vm.pages.manage_cars" ng-include="'app/car/carListAdminView.html'">manage_cars</div>
                        <div ng-if="vm.pages.manage_utilities" ng-include="'app/utility/utilityAdminListView.html'">manage_utilities</div>
                         <div ng-if="vm.pages.search_polls" ng-include="'app/formSearch/formSearchView.html'">search_polls</div>
                         <div ng-if="vm.pages.contact_admin" ng-include="'app/contact/contactAdminView.html'">contact_admin</div>
