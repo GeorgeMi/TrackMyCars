@@ -398,9 +398,6 @@
     <Content Include="scripts\ai.1.0.9-build01279.min.js" />
     <Content Include="Web.config" />
     <Content Include="packages.config" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
@@ -410,6 +407,7 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\CarController.cs" />
     <Compile Include="Controllers\UtilityController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\IndexController.cs" />

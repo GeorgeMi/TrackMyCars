@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DataTransferObject
+﻿namespace DataTransferObject
 {
     public class UtilityDTO
     {
@@ -8,6 +6,6 @@ namespace DataTransferObject
         public string UtilityName { get; set; }
         public int? KmNo { get; set; }
         public int? MonthsNo { get; set; }
-        public DateTime? Description { get; set; }
+        public string Description { get; set; }
     }
 }

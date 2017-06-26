@@ -48,7 +48,7 @@ namespace WebAPI.Models
         /// </summary>
         /// <param name="utilityDto"></param>
         /// <returns>true sau false</returns>
-        public bool AddCategory(UtilityDTO utilityDto)
+        public bool AddUtility(UtilityDTO utilityDto)
         {
             try
             {

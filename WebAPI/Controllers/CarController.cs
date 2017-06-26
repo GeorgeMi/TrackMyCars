@@ -4,6 +4,7 @@
  * Written by Miron George <george.miron2003@gmail.com>, 2016
  */
 
+using System.Collections.Generic;
 using DataTransferObject;
 using System.Net;
 using System.Net.Http;
@@ -17,9 +18,9 @@ namespace WebAPI.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public class UtilityController : ApiController
+    public class CarController : ApiController
     {
-        readonly UtilityModel _utilityModel = new UtilityModel();
+        readonly CarModel _carModel = new CarModel();
 
         /// <summary>
         /// 
@@ -29,11 +30,38 @@ namespace WebAPI.Controllers
         {
             HttpResponseMessage responseMessage;
             JSend json;
-            var list = _utilityModel.GetAllUtilities();
+            var list = _carModel.GetAllCars();
 
             if (list.Count > 0)
             {
-                json = new JSendData<UtilityDTO>("success", list);
+                json = new JSendData<CarDTO>("success", list);
+                responseMessage = Request.CreateResponse(HttpStatusCode.OK, json);
+            }
+            else
+            {
+                json = new JSendMessage("fail", "No items found");
+                responseMessage = Request.CreateResponse(HttpStatusCode.NotFound, json);
+            }
+
+            return responseMessage;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        [RequireToken]
+        [HttpGet]
+        [ActionName("getCar")]
+        public HttpResponseMessage GetCar(int id)
+        {
+            HttpResponseMessage responseMessage;
+            JSend json;
+            var carDetails = _carModel.GetCarDetails(id);
+
+            if (null != carDetails)
+            {
+                json = new JSendData<CarDetailsDTO>("success", new List<CarDetailsDTO> {carDetails});
                 responseMessage = Request.CreateResponse(HttpStatusCode.OK, json);
             }
             else
@@ -47,18 +75,43 @@ namespace WebAPI.Controllers
 
         /// <summary>
         /// </summary>
-        /// <param name="utilityDto"></param>
+        /// <param name="carDetailsDto"></param>
         /// <returns>http status code OK sau ExpectationFailed</returns>
         [RequireAdminToken]
-        public HttpResponseMessage Post(UtilityDTO utilityDto)
+        public HttpResponseMessage Post(CarDetailsDTO carDetailsDto)
         {
             HttpResponseMessage responseMessage;
             JSendMessage json;
-            var response = _utilityModel.AddUtility(utilityDto);
+            var response = _carModel.AddCar(carDetailsDto);
 
             if (response)
             {
-                json = new JSendMessage("success", "Utility successfully added");
+                json = new JSendMessage("success", "Car successfully added");
+                responseMessage = Request.CreateResponse(HttpStatusCode.OK, json);
+            }
+            else
+            {
+                json = new JSendMessage("fail", "Something bad happened");
+                responseMessage = Request.CreateResponse(HttpStatusCode.BadRequest, json);
+            }
+
+            return responseMessage;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="carDto"></param>
+        /// <returns>http status code OK sau ExpectationFailed</returns>
+        [RequireAdminToken]
+        public HttpResponseMessage Put(CarDetailsDTO carDto)
+        {
+            HttpResponseMessage responseMessage;
+            JSendMessage json;
+            var response = _carModel.UpdateCar(carDto);
+
+            if (response)
+            {
+                json = new JSendMessage("success", "Car details updated added");
                 responseMessage = Request.CreateResponse(HttpStatusCode.OK, json);
             }
             else
@@ -80,11 +133,11 @@ namespace WebAPI.Controllers
         {
             HttpResponseMessage responseMessage;
             JSendMessage json;
-            var response = _utilityModel.DeleteUtility(id);
+            var response = _carModel.DeleteCar(id);
 
             if (response)
             {
-                json = new JSendMessage("success", "Utility successfully deleted");
+                json = new JSendMessage("success", "Car successfully deleted");
                 responseMessage = Request.CreateResponse(HttpStatusCode.OK, json);
             }
             else

@@ -12,9 +12,9 @@ namespace Entities
 
         public int UtilityID { get; set; }
         public string UtilityName { get; set; }
-        public Nullable<int> KmNo { get; set; }
-        public Nullable<int> MonthsNo { get; set; }
-        public Nullable<System.DateTime> Description { get; set; }
+        public int? KmNo { get; set; }
+        public int? MonthsNo { get; set; }
+        public string Description { get; set; }
         public virtual ICollection<CarsUtility> CarsUtilities { get; set; }
     }
 }

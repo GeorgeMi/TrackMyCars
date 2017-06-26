@@ -1,28 +1,22 @@
 ﻿(function () {
     "use strict";
     angular
-        .module("formManagement")
-        .controller("FormUserController", ["formResource", "$cookies", "$rootScope",FormUserController]);
+        .module("carManagement")
+        .controller("CarUserController", ["carResource", "$cookies", "$rootScope", CarUserController]);
 
-    function FormUserController(formResource, $cookies, $rootScope) {
+    function CarUserController(carResource, $cookies, $rootScope) {
         var vm = this;
-        vm.page_nr = 0; //numarul paginii
-        vm.per_page = 10; //numarul de elemente de pe pagina
-        vm.Prev = false; // se afiseaza "prev page" la paginare
-        vm.Next = true; // se afiseaza "next page" la paginare
-        vm.state = 'open'; //open, closed, all
+
         $rootScope.isLoading = true; //loading gif
 
         //<-----------------load page----------------------> 
-        var param = { state: vm.state, page_nr: vm.page_nr, per_page: vm.per_page };
-
-        formResource.getForms.getForms(param,
+        carResource.get.getCars(
             function (response) {
 
-                vm.userForms = response.data;
+                vm.userCars = response.data;
                 $rootScope.isLoading = false;
 
-                if (vm.userForms.length < vm.per_page) {
+                if (vm.userCars.length < vm.per_page) {
                     vm.Next = false;
                 }
                 else {
@@ -38,32 +32,6 @@
                 $rootScope.isLoading = false; //loading gif
             }
             );
-
-        //<-----------------delete form----------------------> 
-        vm.deleteForm = function (formID) {
-            var r = confirm("Are you sure that you want to permanently delete this form?");
-
-            if (r == true) {
-                $rootScope.isLoading = true;
-
-                var param = { form_id: formID };
-                var i;
-                // alert(formID);
-
-                formResource.delete.deleteForm(param,
-                    function (data) {
-
-                        for (i = 0; i < vm.userForms.length ; i++) {
-
-                            if (vm.userForms[i].Id === formID) {
-                                vm.userForms.splice(i, 1);
-                            }
-                        }
-                        $rootScope.isLoading = false;
-                    });
-
-            }
-        }
 
         vm.changeID = function (id) {
             //alert("cookie");
@@ -83,13 +51,13 @@
                 vm.page_nr = 0;
                 var param = { state: vm.state, page_nr: vm.page_nr, per_page: vm.per_page };
 
-                formResource.getForms.getForms(param,
+                carResource.get.getCars(param,
                     function (response) {
 
-                        vm.userForms = response.data;
+                        vm.userCars = response.data;
                         $rootScope.isLoading = false;
 
-                        if (vm.userForms.length < vm.per_page) {
+                        if (vm.userCars.length < vm.per_page) {
                             vm.Next = false;
                         }
                         else {
@@ -127,13 +95,13 @@
                 vm.Prev = true;
             }
 
-            formResource.getForms.getForms(param,
+            carResource.getCars.getCars(param,
                 function (response) {
 
-                    vm.userForms = response.data;
+                    vm.userCars = response.data;
                     $rootScope.isLoading = false;
 
-                    if (vm.userForms.length < vm.per_page) {
+                    if (vm.userCars.length < vm.per_page) {
                         vm.Next = false;
                     }
                     else {
@@ -165,10 +133,10 @@
                 vm.state = vm.itemsState;
                 var param = { state: vm.state, page_nr: vm.page_nr, per_page: vm.per_page };
 
-                formResource.getForms.getForms(param,
+                carResource.getCars.getCars(param,
 
                     function (response) {
-                        vm.forms = response.data;
+                        vm.cars = response.data;
                         $rootScope.isLoading = false; //loading gif
                         vm.message = null;
                     },

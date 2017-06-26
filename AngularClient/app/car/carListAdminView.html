@@ -1,57 +1,64 @@
 ﻿<div ng-controller="CarController as ctrl">
-    <div ng-controller="CarController as ctrl">
-        <div class="panel panel-default" ng-controller="UserController as user">
-            <div class="panel-heading">Add new car</div>
-            <div class="panel-body">
-                <form class="form-horizontal">
-                    <div class="form-group ">
-                        <label class="control-label col-sm-2">Registration Number:</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" placeholder="Registration Number" ng-model="ctrl.sendForm.RegNo" pattern="^[A-Z]{1,2}-?[0-9]{2,3}-?[A-Z]{3}$" title="Must be in the following order: IS-01-ABC" required>
-                        </div>
+    <div class="panel panel-default" ng-controller="UserController as user">
+        <div class="panel-heading" data-toggle="collapse" data-target="#collapseAdd">Add new car</div>
+        <div class="panel-body collapse" id="collapseAdd">
+            <form class="form-horizontal">
+                <div class="form-group ">
+                    <label class="control-label col-sm-2">Registration Number:</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" placeholder="Registration Number" ng-model="ctrl.addCar.regNo" pattern="^[A-Z]{1,2}-?[0-9]{2,3}-?[A-Z]{3}$" title="Must be in the following order: IS-01-ABC" required>
                     </div>
+                </div>
 
-                    <div class="form-group ">
-                        <label class="control-label col-sm-2">Brand:</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" placeholder="Brand" ng-model="ctrl.sendForm.Brand" required>
-                        </div>
+                <div class="form-group ">
+                    <label class="control-label col-sm-2">Brand:</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" placeholder="Brand" ng-model="ctrl.addCar.brand" required>
                     </div>
+                </div>
 
-                    <div class="form-group ">
-                        <label class="control-label col-sm-2">Year:</label>
-                        <div class="col-sm-8">
-                            <input type="number" min="1990" max="2020" class="form-control" placeholder="Year" ng-model="ctrl.sendForm.Year" required>
-                        </div>
+                <div class="form-group ">
+                    <label class="control-label col-sm-2">Year:</label>
+                    <div class="col-sm-8">
+                        <input type="number" min="1990" max="2020" class="form-control" placeholder="Year" ng-model="ctrl.addCar.year" required>
                     </div>
+                </div>
 
-                    <div class="form-group ">
-                        <label class="control-label col-sm-2">KM:</label>
-                        <div class="col-sm-8">
-                            <input type="number" min="0" class="form-control" placeholder="Kilometers" ng-model="ctrl.sendForm.KmNo" required>
-                        </div>
+                <div class="form-group ">
+                    <label class="control-label col-sm-2">KM:</label>
+                    <div class="col-sm-8">
+                        <input type="number" min="0" class="form-control" placeholder="Kilometers" ng-model="ctrl.addCar.kmNo" required>
                     </div>
+                </div>
 
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Driver:</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" ng-model="ctrl.addCar.driverId" required>
+                            <option value="{{user.UserID}} " ng-repeat="user in user.users ">{{ user.Username }}</option>
+                        </select>
+                    </div>
+                </div>
 
-                    <div class="form-group">
-                        <div class="col-sm-4 col-sm-offset-2">
-                            <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                                <div class="btn-group" role="group">
-                                    <button class="btn btn-primary" ng-click="ctrl.addForm()">Add car</button>
-                                </div>
+                <div class="form-group">
+                    <div class="col-sm-4 col-sm-offset-2">
+                        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-primary" ng-click="ctrl.sendCarDetails()">Add car</button>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-sm-8 col-sm-offset-2">
-                            <div ng-if="ctrl.created == 'success'" class="alert alert-success" role="alert">{{ctrl.messageForm}}</div>
-                            <div ng-if="ctrl.created == 'fail'" class="alert alert-danger" role="alert">{{ctrl.messageForm}}</div>
-                        </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <div ng-if="ctrl.created == 'success'" class="alert alert-success" role="alert">{{ctrl.messageForm}}</div>
+                        <div ng-if="ctrl.created == 'fail'" class="alert alert-danger" role="alert">{{ctrl.messageForm}}</div>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
+
     <div class="panel panel-default">
         <div class="panel-heading">Search car</div>
         <div class="panel-body">
@@ -59,54 +66,45 @@
             <div class="col-sm-8">
                 <input type="text" ng-model="searchText" class="form-control" placeholder="Search">
             </div>
-
         </div>
     </div>
-
     <div class="panel panel-default">
-        <div class="panel-heading">All polls</div>
+        <div class="panel-heading">All cars</div>
         <div class="panel-body">
             <table class="table">
                 <thead>
                     <tr>
-                        <td>User</td>
-                        <td>Title</td>
-                        <td class="mobileHidden">Category</td>
-                        <td class="mobileHidden">Created Date</td>
-                        <td class="mobileHidden">Deadline</td>
-                        <td>State</td>
+                        <td>ID</td>
+                        <td>Registration Number</td>
+                        <td>Brand</td>
+                        <td class="mobileHidden">Year</td>
+                        <td class="mobileHidden">KM</td>
+                        <td class="mobileHidden">Driver</td>
+                        <td class="mobileHidden">Utilities</td>
                         <td>Action</td>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="form in ctrl.forms  | filter:searchText">
-                        <td>{{ form.Username}}</td>
-                        <td>{{ form.Title}}</td>
-                        <td class="mobileHidden">{{ form.Category }}</td>
-                        <td class="mobileHidden">{{ form.CreatedDate }}</td>
-                        <td class="mobileHidden">{{ form.Deadline }}</td>
-                        <td>{{ form.State }}</td>
+                    <tr ng-repeat="car in ctrl.cars  | filter:searchText">
+                        <td>{{ car.CarID}}</td>
+                        <td>{{ car.RegNo}}</td>
+                        <td>{{ car.Brand}}</td>
+                        <td class="mobileHidden">{{ car.Year }}</td>
+                        <td class="mobileHidden">{{ car.KmNo }}</td>
+                        <td class="mobileHidden">{{ car.Driver }}</td>
+                        <td class="mobileHidden">{{ car.Utilities }}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="...">
-                                <button class="btn btn-default" ng-click="ctrl.deleteForm(form.Id)">Delete</button>
+                                <button class="btn btn-default" ng-click="ctrl.deleteCar(car.CarID)">Delete</button>
+                                <button class="btn btn-default" ng-click="vm.changePage(ctrl.updateCar(car.CarID))">Update</button>
                             </div>
                         </td>
-
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-
     <div class="col-sm-8 col-sm-offset-2">
         <div ng-if="ctrl.message" class="alert alert-info" role="alert">{{ctrl.message}}</div>
     </div>
-
- 
-    <nav>
-        <ul class="pager col-sm-12">
-            <li><a href="" ng-if="ctrl.Prev" ng-click="ctrl.chosePageNr(ctrl.page_nr - 1)">Previous page</a></li>
-            <li><a href="" ng-if="ctrl.Next" ng-click="ctrl.chosePageNr(ctrl.page_nr + 1)">Next page</a></li>
-        </ul>
-    </nav>
 </div>

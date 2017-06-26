@@ -2,13 +2,13 @@
     "use strinct";
     angular
         .module("app")
-        .controller("MainController", ["userAccount","formResource", "$cookies", "$routeParams", "$location", "$rootScope", MainController])
+        .controller("MainController", ["userAccount", "$cookies", "$routeParams", "$location", "$rootScope", MainController])
     
-    function MainController(userAccount, formResource, $cookies, $routeParams, $location, $rootScope)
+    function MainController(userAccount, $cookies, $routeParams, $location, $rootScope)
     {
         var vm = this;
 
-        vm.isLoggedIn = true;
+        vm.isLoggedIn = false;
         $rootScope.isLoading = false; //loading gif
         $rootScope.isLoadingRegister = false; //loading gif
         vm.isQuery = false;
@@ -17,7 +17,7 @@
         vm.messageFailedRegistration = '';
         vm.messageLogIn = '';
         vm.message = '';
-        vm.role = 'admin';
+        vm.role = '';
 
         //data for login
         vm.userData = {
@@ -38,19 +38,15 @@
         };
         //app pages
         vm.pages = {
-            home: true,
-            my_polls: false,
-            my_poll_result: false,
+            my_cars: true,
             utilities: false,
-            new_poll: false,
             new_car: false,
             manage_users: false,
-            manage_polls: false,
             manage_cars: false,
+            update_cars: false,
             manage_utilities: false,
             utility_forms: false,
             contact: false,
-            search_polls: false,
             contact_admin: false,
             contact_admin_redirect: false
         };
@@ -125,7 +121,7 @@
                         vm.token = response.token;
                         vm.role = response.role;
                         //always load on home page
-                        vm.changePage('home');
+                        vm.changePage('my_cars');
 
                         var expireDate = new Date();
                         expireDate.setDate(expireDate.getDate() + 1);
@@ -168,7 +164,7 @@
 
                         //always load on home page
                         if (!vm.isQuery) {
-                            vm.changePage('home');
+                            vm.changePage('my_cars');
                         }
 
                         var expireDate = new Date();
@@ -191,18 +187,15 @@
 
             vm.isLoggedIn = false;
 
-            vm.pages.home = false;
             vm.pages.utilities = false;
-            vm.pages.my_polls = false;
-            vm.pages.new_poll = false;
             vm.pages.new_car = false;
+            vm.pages.my_cars = false;
             vm.pages.manage_users = false;
-            vm.pages.manage_polls = false;
             vm.pages.manage_cars = false;
+            vm.pages.update_cars = false;
             vm.pages.manage_utilities = false;
             vm.pages.utility_forms = false;
             vm.pages.contact = false;
-            vm.pages.search_polls = false;
             vm.pages.contact_admin = false;
             vm.pages.contact_admin_redirect = false;
         }
@@ -213,52 +206,41 @@
            //inchide sideBar la smartphone
             $(".mobileSideBarVisible").addClass("sideBarHidden");
             vm.ok = 1; // mypage este valid
-            vm.pages.home = false;
             vm.pages.utilities = false;
-            vm.pages.utility_forms = false;
-            vm.pages.my_polls = false;
-            vm.pages.my_poll_result = false;
-            vm.pages.new_poll = false;
             vm.pages.new_car = false;
+            vm.pages.my_cars = false;
             vm.pages.manage_users = false;
-            vm.pages.manage_polls = false;
             vm.pages.manage_cars = false;
+            vm.pages.update_cars = false;
             vm.pages.manage_utilities = false;
+            vm.pages.utility_forms = false;
             vm.pages.contact = false;
-            vm.pages.search_polls = false;
             vm.pages.contact_admin = false;
             vm.pages.contact_admin_redirect = false;
 
-            if (mypage == 'home') {
-                vm.pages.home = true;
-                vm.ok = 1;
-            }
-            else if (mypage == 'utilities') {
+
+            if (mypage == 'utilities') {
                 vm.pages.utilities = true;
                 vm.ok = 1;
             }
-            else if (mypage == 'my_polls') {
-                vm.pages.my_polls = true;
-                vm.ok = 1;
-            }
-            else if (mypage == 'new_poll') {
-                vm.pages.new_poll = true;
-                vm.ok = 0;
-            }
-            else if (mypage == 'new_car') {
+           else if (mypage == 'new_car') {
                 vm.pages.new_car = true;
                 vm.ok = 0;
+           }
+           else if (mypage == 'my_cars') {
+                vm.pages.my_cars = true;
+                vm.ok = 1;
             }
             else if (mypage == 'manage_users') {
                 vm.pages.manage_users = true;
                 vm.ok = 1;
             }
-            else if (mypage == 'manage_polls') {
-                vm.pages.manage_polls = true;
-                vm.ok = 1;
-            }
             else if (mypage == 'manage_cars') {
                 vm.pages.manage_cars = true;
+                vm.ok = 1;
+            }
+            else if (mypage == 'update_cars') {
+                vm.pages.update_cars = true;
                 vm.ok = 1;
             }
             else if (mypage == 'manage_utilities') {
@@ -271,10 +253,6 @@
             }
             else if (mypage == 'contact') {
                 vm.pages.contact = true;
-                vm.ok = 1;
-            }
-            else if (mypage == 'search_polls') {
-                vm.pages.search_polls = true;
                 vm.ok = 1;
             }
             else if (mypage == 'contact_admin') {
@@ -297,7 +275,7 @@
                 vm.pagesArray.last = vm.pagesArray.current;
             }
         }
-        vm.changePage('home');
+        vm.changePage('my_cars');
 
         vm.backPage = function () {
 

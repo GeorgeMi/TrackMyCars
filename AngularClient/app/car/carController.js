@@ -18,15 +18,11 @@
 
         //data form to send
         vm.addCar = {
-            username: $cookies.get('username'),
-            title: '',
-            category: '',
-            createdDate: '',
-            deadline: '',
-            id: 0,
-            state: 'open',
-            //  answer: {id:1,answer:"a"}
-            questions: [{ id: 1, question: '', answers: [{ id: 1, answer: '' }] }]
+            regNo: '',
+            brand: '',
+            year: '',
+            kmNo: '',
+            driverId: ''
         };
 
         vm.addCarMessage = '';
@@ -34,43 +30,8 @@
         vm.maxQuestionCount = 20;
         vm.maxAnswerCount = 6;
 
-        //<-----------------add question---------------------->
-        vm.addNewQuestion = function () {
-
-            var questionID = vm.addCar.questions.length + 1;
-
-            if (questionID <= vm.maxQuestionCount) {
-                vm.addCar.questions.push({ 'id': questionID, 'question': '', 'answers': [{ 'id': 1, 'answer': '' }] });
-            }
-            else {
-                alert("Maximum Number of Questions Allowed is " + vm.maxQuestionCount);
-            }
-        };
-
-        //<-----------------delete question----------------------> 
-        vm.deleteQuestion = function (questionID) {
-
-            if (vm.addCar.questions.length > 1) {
-                vm.addCar.questions.splice(questionID - 1, 1);
-                var count = 1;
-                var i;
-
-                //rewrite id foreach element in array
-                for (i = 0; i <= vm.addCar.questions.length; i++) {
-                    if (vm.addCar.questions[i] !== undefined) {
-                        vm.addCar.questions[i].id = count;
-                        count++;
-                    }
-                }
-            } else {
-                alert("Minimum Number of Questions Allowed is 1");
-            }
-        }
-
         //<-----------------load page----------------------> 
-        var param = { state: vm.state, page_nr: vm.page_nr, per_page: vm.per_page };
-        carResource.get.getcars(param,
-
+        carResource.get.getCars(
             function (response) {
                 vm.cars = response.data;
                 $rootScope.isLoading = false; //loading gif
@@ -96,68 +57,71 @@
         );
 
 
-        //<-----------------add form----------------------> 
+        //<-----------------add car----------------------> 
         vm.sendCarDetails = function () {
-            // alert(vm.addCar);
-
-            if (vm.addCar.title != '' && vm.addCar.category != '' && vm.addCar.deadline != '') {
-
-                vm.addCar.title = vm.addCar.title.trim()
-                vm.addCar.category = vm.addCar.category.trim()
-
+            if (vm.addCar.regNo != '' && vm.addCar.brand != '' && vm.addCar.year != '' && vm.addCar.kmNo != '' && vm.addCar.kmNo >= 0) {
+                vm.addCar.brand = vm.addCar.brand.trim();
             }
 
-            if (vm.addCar.title != '' && vm.addCar.category != '' && vm.addCar.deadline != '') {
+            if (vm.addCar.regNo != '' && vm.addCar.brand != '' && vm.addCar.year != '' && vm.addCar.kmNo != '' && vm.addCar.kmNo >= 0) {
                 $rootScope.isLoading = true;
-                var x = JSON.stringify(vm.addCar);
-
-                carResource.add.sendCarDetails(x,
-                    //s-a creat cu succes
+                carResource.add.sendCarDetails(vm.addCar,
                     function (response) {
-                        vm.addCar.title = '';
-                        vm.addCar.category = '';
-                        vm.addCar.createdDate = '';
-                        vm.addCar.deadline = '';
-                        vm.addCar.questions = [{ id: 1, question: '', answers: [{ id: 1, answer: '' }] }];
 
-                        vm.messageForm = response.message;
-                        vm.created = response.status;
-                        $rootScope.isLoading = false;
+                        carResource.get.getCars(
+                            function (response) {
+                                vm.addCar.regNo = '';
+                                vm.addCar.brand = '';
+                                vm.addCar.year = '';
+                                vm.addCar.kmNo = '';
+                                vm.addCar.driverId = '';
+                                vm.cars = response.data;
+                                $rootScope.isLoading = false;
+                            },
+                            function (error) {
+                                vm.message = error.data.message;
+                                $rootScope.isLoading = false; //loading gif
+                            });
                     },
-
-                   //nu s-a creat
-
-            function (error) {
-                vm.messageForm = error.data.message;
-                vm.created = error.data.status;
-                $rootScope.isLoading = false; //loading gif
-            });
-
+                    function (error) {
+                        vm.message = error.data.message;
+                        $rootScope.isLoading = false; //loading gif
+                    });
             }
         }
 
-        //<-----------------delete form----------------------> 
-        vm.deleteCar = function (formID) {
-            var r = confirm("Are you sure that you want to permanently delete this form?");
+        //<-----------------delete car----------------------> 
+        vm.deleteCar = function (carID) {
+            var r = confirm("Are you sure that you want to permanently delete this car?");
+
             if (r == true) {
                 $rootScope.isLoading = true;
-
-                var param = { form_id: formID };
+                var param = { car_id: carID };
                 var i;
-                // alert(formID);
-
                 carResource.delete.deleteCar(param,
-                    function (data) {
+                    function (response) {
 
                         for (i = 0; i < vm.cars.length ; i++) {
 
-                            if (vm.cars[i].Id === formID) {
+                            if (vm.cars[i].CarID === carID) {
                                 vm.cars.splice(i, 1);
                             }
                         }
-                    });
-                $rootScope.isLoading = false;
+                        $rootScope.isLoading = false;
+                    },
+                function (error) {
+                    vm.message = error.data.message;
+                    $rootScope.isLoading = false; //loading gif
+                });
             }
+        }
+
+        //<-----------------update car----------------------> 
+        vm.updateCar = function (id) {
+            
+            $cookies.remove('update_car');
+            $cookies.put('update_car', id);
+            return 'update_cars';
         }
 
         //<-----------------change items per page----------------------> 
@@ -171,28 +135,14 @@
                 vm.per_page = vm.itemsPerPage;
                 vm.page_nr = 0;
                 var param = { page_nr: 0, per_page: vm.itemsPerPage, state: vm.state };
-                carResource.get.getcars(param,
+                carResource.get.getCars(param,
 
                     function (response) {
                         vm.cars = response.data;
                         $rootScope.isLoading = false; //loading gif
                         vm.message = null;
 
-                        if (vm.cars.length < vm.per_page) {
-                            vm.Next = false;
-                        }
-                        else {
-                            vm.Next = true;
-                        }
-
-                        if (vm.page_nr <= 0) {
-                            vm.Prev = false;
-                        }
-                        else {
-                            vm.Prev = true;
-                        }
-
-                    },
+                       },
 
                     function (error) {
                         vm.message = error.data.message;
@@ -216,7 +166,7 @@
                 vm.Prev = true;
             }
 
-            carResource.get.getcars(param,
+            carResource.get.getCars(param,
 
                function (response) {
                    vm.cars = response.data;
@@ -244,9 +194,6 @@
                    vm.Next = false;
                    $rootScope.isLoading = false; //loading gif
                });
-
-
         }
-
     }
 }());

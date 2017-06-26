@@ -1,0 +1,45 @@
+﻿<div ng-controller="CarUserController as ctrl">
+    <div class="panel panel-default">
+        <div class="panel-heading">Search car</div>
+        <div class="panel-body">
+            <label class="control-label col-sm-2">Search:</label>
+            <div class="col-sm-8">
+                <input type="text" ng-model="searchText" class="form-control" placeholder="Search">
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="panel panel-default">
+            <div class="panel-heading">My cars</div>
+            <div class="panel-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <td>Registration Number</td>
+                        <td>Brand</td>
+                        <td class="mobileHidden">Year</td>
+                        <td class="mobileHidden">KM</td>
+                        <td class="mobileHidden">Drivers</td>
+                        <td class="mobileHidden">Utilities</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="car in ctrl.userCars  | filter:searchText">
+                        <td>{{ car.RegNo}}</td>
+                        <td>{{ car.Brand}}</td>
+                        <td class="mobileHidden">{{ car.Year }}</td>
+                        <td class="mobileHidden">{{ car.KmNo }}</td>
+                        <td class="mobileHidden">{{ car.Drivers }}</td>
+                        <td class="mobileHidden">{{ car.Utilities }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-sm-8 col-sm-offset-2">
+            <div ng-if="ctrl.message" class="alert alert-info" role="alert">{{ctrl.message}}</div>
+        </div>      
+    </div>
+</div>

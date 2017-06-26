@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vote my poll</title>
+    <title>Track my cars</title>
 
     <!-- Style sheets -->
     <link href="Content/bootstrap.css" rel="stylesheet" />
@@ -27,6 +27,7 @@
                     </button>
                 </div>
 
+                <img src="images/repair_logo.png" height="42" width="42">
                 <div ng-if="vm.isLoggedIn" class="navbar-brand ">Track my cars</div>
                 <div ng-hide="vm.isLoggedIn" class="navbar-brand brandName"> Track my cars</div>
             </div>
@@ -101,14 +102,10 @@
         <!-- sidebar -->
         <div id="sidebar-wrapper" class="mobileSideBarVisible sideBarHidden">
             <ul class="sidebar-nav">
-                <li ng-click="vm.changePage('home')"><a href="/#">Home</a></li>
                 <li ng-click="vm.changePage('contact')"><a href="/#">Contact</a></li>
                 <li ng-click="vm.logout()"><a href="">Log out</a></li>
                 <li><hr></li>
-                <li ng-click="vm.changePage('my_polls')"><a href="/#/my_polls">My Cars</a></li>
-                <li ng-click="vm.changePage('utilities')"><a href="/#/utilities">Utilities</a></li>
-                <li ng-click="vm.changePage('search_polls')"><a href="/#/my_polls">Search polls</a></li>
-                <li ng-click="vm.changePage('new_poll')"><a href="/#/new_poll">Add new poll</a></li>
+                <li ng-click="vm.changePage('my_cars')"><a href="/#/my_cars">My Cars</a></li>
             </ul>
 
             <ul ng-if="vm.role == 'admin'" class="sidebar-nav">
@@ -126,16 +123,12 @@
             <div class="container-fluid">
                 <div class="row">
                     <div ng-if="vm.isLoggedIn" class="col-sm-12">
-                        <div ng-if="vm.pages.home" ng-include="'app/form/formListView.html'">home</div>
                         <div ng-if="vm.pages.contact" ng-include="'app/contact/contactView.html'">contact</div>
-                        <div ng-if="vm.pages.utilities" ng-include="'app/utility/utilityUserListView.html'">utilities</div>
-                        <div ng-if="vm.pages.my_polls" ng-include="'app/formUser/formListUsersFormsView.html'">my_polls</div>
-                        <div ng-if="vm.pages.new_poll" ng-include="'app/form/formAddView.html'">new_poll</div>
+                        <div ng-if="vm.pages.my_cars" ng-include="'app/carUser/carListUsersFormsView.html'">my_cars</div>
+                        <div ng-if="vm.pages.update_cars" ng-include="'app/carDetails/carUpdateAdminView.html'">update_car</div>
                         <div ng-if="vm.pages.manage_users" ng-include="'app/user/userListView.html'"></div>
-                        <div ng-if="vm.pages.manage_polls" ng-include="'app/form/formListAdminView.html'">manage_polls</div>
                         <div ng-if="vm.pages.manage_cars" ng-include="'app/car/carListAdminView.html'">manage_cars</div>
-                       <div ng-if="vm.pages.manage_utilities" ng-include="'app/utility/utilityAdminListView.html'">manage_utilities</div>
-                        <div ng-if="vm.pages.search_polls" ng-include="'app/formSearch/formSearchView.html'">search_polls</div>
+                        <div ng-if="vm.pages.manage_utilities" ng-include="'app/utility/utilityAdminListView.html'">manage_utilities</div>
                         <div ng-if="vm.pages.contact_admin" ng-include="'app/contact/contactAdminView.html'">contact_admin</div>
                         <div ng-if="vm.pages.contact_admin_redirect" ng-include="'app/contact/contactAdminRedirectView.html'">contact_admin_redirect</div>
                     </div>
@@ -201,6 +194,7 @@
     <script src="Scripts/Chart.js"></script>
     <script src="Scripts/angular-chart.js"></script>
     <script src="Scripts/ngclipboard.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
     <!-- Application Script -->
     <script src="app/app.js"></script>
@@ -210,7 +204,6 @@
     <script src="common/userResource.js"></script>
     <script src="common/userAccount.js"></script>
     <script src="common/utilityResource.js"></script>
-    <script src="common/formResource.js"></script>
     <script src="common/carResource.js"></script>
     <script src="common/contactResource.js"></script>
 
@@ -218,12 +211,11 @@
     <script src="app/mainController.js"></script>
     <script src="app/user/userController.js"></script>
     <script src="app/utility/utilityController.js"></script>
-    <script src="app/form/formController.js"></script>
     <script src="app/car/carController.js"></script>
-    <script src="app/formUser/formUserController.js"></script>
+    <script src="app/carUser/carUserController.js"></script>
     <script src="app/contact/contactController.js"></script>
-    <script src="app/formSearch/formSearchController.js"></script>
     <script src="app/user/usernameListController.js"></script>
+    <script src="app/carDetails/carDetailsController.js"></script>
     <script src="app/contact/contactAdminRedirectController.js"></script>
 </body>
 
@@ -241,10 +233,5 @@
             $(".mobileSideBarVisible").addClass("sideBarHidden");
         }
     });
-
-    function copyToClipboard(s) {
-        window.prompt("Copy to clipboard: Ctrl+C, Enter", s);
-    }
-
 
 </script>

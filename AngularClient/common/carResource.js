@@ -6,10 +6,10 @@
 
     function carResource($resource, appSettings, $cookies) {
         return {
-            //all forms
-            get: $resource(appSettings.serverPath + "/api/form?state=:state&page=:page_nr&per_page=:per_page", { state: '@id', page_nr: '@id', per_page: '@id' },
+            //all cars
+            get: $resource(appSettings.serverPath + "/api/car",null,
                       {
-                          'getForms': {
+                          'getCars': {
                               method: 'GET',
                               headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'token': $cookies.get('token') },
                               transformRequest: function (data, headersGetter) {
@@ -21,10 +21,10 @@
                               }
                           }
                       }),
-            //specific form
-            getCar: $resource(appSettings.serverPath + "/api/form/getform/:form_id", { form_id: '@id' },
+            //specific car
+            getCar: $resource(appSettings.serverPath + "/api/car/:car_id", { car_id: '@id' },
                      {
-                         'getForm': {
+                         'getCar': {
                              method: 'GET',
                              headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'token': $cookies.get('token') },
                              transformRequest: function (data, headersGetter) {
@@ -36,43 +36,30 @@
                              }
                          }
                      }),
-            //add form
-            add: $resource(appSettings.serverPath + "/api/form", null,
+            //add car
+            add: $resource(appSettings.serverPath + "/api/car", null,
                {
-                   'addForm': {
+                   'sendCarDetails': {
                        method: 'POST',
                        headers: { 'Content-Type': 'application/json', 'token': $cookies.get('token') }
                    }
 
                }),
-            //send form with vote
-            vote: $resource(appSettings.serverPath + "/api/vote", null,
-              {
-                  'voteForm': {
-                      method: 'POST',
-                      headers: { 'Content-Type': 'application/json', 'token': $cookies.get('token') }
-                  }
 
-              }),
-            //all forms from user
-            getForms: $resource(appSettings.serverPath + "/api/form/user/" + $cookies.get('username') + "?state=:state&page=:page_nr&per_page=:per_page", { state: '@id', page_nr: '@id', per_page: '@id' },
-                      {
-                          'getForms': {
-                              method: 'GET',
-                              headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'token': $cookies.get('token') },
-                              transformRequest: function (data, headersGetter) {
-                                  var str = [];
-                                  for (var d in data) {
-                                      str.push(encodeURIComponent(d) + "=" + encodeURIComponent(data[d]));
-                                  }
-                                  return str.join("&");
-                              }
-                          }
-                      }),
-            //delete form
-            delete: $resource(appSettings.serverPath + "/api/form/:form_id", { form_id: '@id' },
+            //update car
+            update: $resource(appSettings.serverPath + "/api/car", null,
                {
-                   'deleteForm': {
+                   'updateCarDetails': {
+                       method: 'PUT',
+                       headers: { 'Content-Type': 'application/json', 'token': $cookies.get('token') }
+                   }
+
+               }),
+
+            //delete car
+            delete: $resource(appSettings.serverPath + "/api/car/:car_id", { car_id: '@id' },
+               {
+                   'deleteCar': {
                        method: 'DELETE',
                        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'token': $cookies.get('token') },
                        transformRequest: function (data, headersGetter) {

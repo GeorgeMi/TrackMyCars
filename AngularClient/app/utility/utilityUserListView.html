@@ -15,7 +15,7 @@
         <div class="panel-heading">All utilities</div>
         <div class="panel-body">
             <div class="list-group" ng-repeat="utility in ctrl.utilities  | filter:searchText">
-                <button ng-click="vm.changePage(ctrl.viewUtilityForms(category.UtilityID))" type="button" class="list-group-item">{{ utility.Name }}</button>
+                <button ng-click="vm.changePage(ctrl.viewUtilityForms(category.UtilityID))" type="button" class="list-group-item">{{ utility.UtilityName }}</button>
             </div>
         </div>
     </div>

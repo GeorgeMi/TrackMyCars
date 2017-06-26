@@ -12,7 +12,10 @@
         $rootScope.isLoading = true;//loading gif
         
         vm.utility =  {
-            name: ''
+            utilityName: '',
+            kmNo: '',
+            monthsNo: '',
+            description: ''
         };
        
         utilityResource.get.getUtilities(
@@ -27,27 +30,35 @@
             }
         );
        
-        vm.addUtility = function () {
-            $rootScope.isLoading = true;
+        vm.addUtility = function() {
+            if (vm.utility.utilityName != '') {
+                vm.utility.utilityName = vm.utility.utilityName.replace(/ /g, '');
+            }
 
-            utilityResource.add.addUtility(vm.utility,
-                function (response) {
+            if (vm.utility.utilityName != '') {
+                $rootScope.isLoading = true;
+                utilityResource.add.addUtility(vm.utility,
+                    function(response) {
 
-                    utilityResource.get.getUtilities(
-                    function (response) {
-                        vm.utility.name = '';
-                        vm.utilities = response.data;
-                        $rootScope.isLoading = false;
+                        utilityResource.get.getUtilities(
+                            function(response) {
+                                vm.utility.utilityName = '';
+                                vm.utility.kmNo = '';
+                                vm.utility.monthsNo = '';
+                                vm.utility.description = '';
+                                vm.utilities = response.data;
+                                $rootScope.isLoading = false;
+                            },
+                            function(error) {
+                                vm.message = error.data.message;
+                                $rootScope.isLoading = false; //loading gif
+                            });
                     },
-                    function (error) {
+                    function(error) {
                         vm.message = error.data.message;
                         $rootScope.isLoading = false; //loading gif
                     });
-            },
-             function (error) {
-                 vm.message = error.data.message;
-                 $rootScope.isLoading = false; //loading gif
-             });
+            }
         }
 
         vm.deleteUtility = function (utilityID) {

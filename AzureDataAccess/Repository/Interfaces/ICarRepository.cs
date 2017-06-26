@@ -15,5 +15,6 @@ namespace AzureDataAccess.Repository.Interfaces
     /// </summary>
     public interface ICarRepository : IGenericRepository<Car>
     {
+        int AddCarReturnIndex(Car entity);
     }
 }

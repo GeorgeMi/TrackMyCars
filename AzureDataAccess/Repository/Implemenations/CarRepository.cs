@@ -18,5 +18,13 @@ namespace AzureDataAccess.Repository.Implemenations
         public CarRepository(TrackMyCarsContext context) : base(context)
         {
         }
-    }
+
+        public int AddCarReturnIndex(Car entity)
+        {
+            Context.Set<Car>().Add(entity);
+            Context.SaveChanges();
+
+            return entity.CarID;
+        }
+    }   
 }

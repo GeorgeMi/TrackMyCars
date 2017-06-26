@@ -49,7 +49,6 @@ namespace BusinessLogic
         {
             var utility = new Utility
             {
-                UtilityID = utilityDto.UtilityID,
                 Description = utilityDto.Description,
                 KmNo = utilityDto.KmNo,
                 MonthsNo = utilityDto.MonthsNo,

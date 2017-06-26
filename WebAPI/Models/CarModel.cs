@@ -44,15 +44,47 @@ namespace WebAPI.Models
         }
 
         /// <summary>
-        ///  
+        /// 
         /// </summary>
-        /// <param name="carDto"></param>
-        /// <returns>true sau false</returns>
-        public bool AddCar(CarDTO carDto)
+        public CarDetailsDTO GetCarDetails(int carId)
         {
             try
             {
-                _bl.CarLogic.AddCar(carDto);
+                return _bl.CarLogic.GetCarDetails(carId);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <param name="carDetailsDto"></param>
+        /// <returns>true sau false</returns>
+        public bool AddCar(CarDetailsDTO carDetailsDto)
+        {
+            try
+            {
+                _bl.CarLogic.AddCar(carDetailsDto);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <param name="carDetailsDto"></param>
+        /// <returns>true sau false</returns>
+        public bool UpdateCar(CarDetailsDTO carDetailsDto)
+        {
+            try
+            {
+                _bl.CarLogic.UpdateCar(carDetailsDto);
                 return true;
             }
             catch
