@@ -34,9 +34,9 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2">Driver:</label>
                     <div class="col-sm-8">
-                        <select class="form-control" ng-model="ctrl.updateCar.driver" required>
-                            <option value="0" > - </option>
-                            <option value="{{user.UserID}} " ng-repeat="user in user.users " ng-selected="user.UserID">{{ user.Username }}</option>
+                        <select class="form-control" ng-model="ctrl.updateCar.DriverID" required>
+                            <option value="0"> - </option>
+                            <option value="{{user.UserID}} " ng-repeat="user in user.users ">{{ user.Username }}</option>
                         </select>
                     </div>
                 </div>

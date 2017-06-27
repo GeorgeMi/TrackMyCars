@@ -17,8 +17,8 @@
             Brand: '',
             Year: '',
             KmNo: '',
-            Driver: 0,
-            Utilities:[]
+            DriverID: 0,
+            UtilitiesIDs: []
         };
         vm.addCarMessage = '';
 
@@ -71,15 +71,18 @@
 
         vm.checkbox = function (utilityId) {
             // alert(utilityId);
-            if (vm.updateCar.Utilities != undefined) {
-                if (vm.updateCar.Utilities.indexOf(utilityId) > -1) {
-                    vm.updateCar.Utilities.splice(vm.updateCar.Utilities.indexOf(utilityId), 1);
+            if (vm.updateCar.UtilitiesIDs != undefined) {
+                if (vm.updateCar.UtilitiesIDs.indexOf(utilityId) > -1) {
+                    vm.updateCar.UtilitiesIDs.splice(vm.updateCar.UtilitiesIDs.indexOf(utilityId), 1);
                 } else {
-                    vm.updateCar.Utilities.push(utilityId);
+                    vm.updateCar.UtilitiesIDs.push(utilityId);
                 }
             } else {
-                vm.updateCar.Utilities= new Array(utilityId);
+                vm.updateCar.UtilitiesIDs = new Array(utilityId);
+                vm.updateCar.UtilitiesIDs.push(utilityId);
             }
+
+            vm.updateCar.UtilitiesIDs = vm.updateCar.UtilitiesIDs.filter(function (n) { return n != undefined });
         }
     }
 }());

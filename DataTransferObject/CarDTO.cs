@@ -7,5 +7,6 @@
         public int Year { get; set; }
         public int KmNo { get; set; }
         public string Brand { get; set; }
+        public string Driver { get; set; }
     }
 }

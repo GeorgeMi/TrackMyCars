@@ -39,7 +39,8 @@ namespace BusinessLogic
                 Brand = c.Brand,
                 KmNo = c.KmNo,
                 RegNo = c.RegNo,
-                Year = c.Year
+                Year = c.Year,
+                Driver = _dataAccess.DriverCarRepository.FindFirstBy(d => d.CarID == c.CarID)?.User?.Username ?? "-"
             }).ToList();
         }
 
@@ -50,6 +51,7 @@ namespace BusinessLogic
         public CarDetailsDTO GetCarDetails(int carId)
         {
             var car = _dataAccess.CarRepository.FindFirstBy(c => c.CarID == carId);
+            
             return new CarDetailsDTO
             {
                 CarID = car.CarID,
@@ -57,8 +59,8 @@ namespace BusinessLogic
                 KmNo = car.KmNo,
                 RegNo = car.RegNo,
                 Year = car.Year,
-                DriverID = _dataAccess.DriverCarRepository.FindFirstBy(d => d.CarID == carId).UserID,
-                UtilitiesIDs = _dataAccess.CarsUtilityRepository.FindAllBy(u => u.CarID == carId).Select(utility => utility.UtilityID).ToList()
+                DriverID = _dataAccess.DriverCarRepository.FindFirstBy(d => d.CarID == carId)?.UserID ?? 0,
+            UtilitiesIDs = _dataAccess.CarsUtilityRepository.FindAllBy(u => u.CarID == carId).Select(utility => utility.UtilityID).ToList()
             };
         }
 
@@ -107,14 +109,33 @@ namespace BusinessLogic
             _dataAccess.CarRepository.Update(car);
 
             var exitingDriver = _dataAccess.DriverCarRepository.FindFirstBy(d => d.CarID == carDetailsDto.CarID);
-            if (null == exitingDriver)
+
+            if (carDetailsDto.DriverID == 0)
             {
-                _dataAccess.DriverCarRepository.Add(new DriversCar { CarID = carDetailsDto.CarID, UserID = carDetailsDto.DriverID });
+                if (null != exitingDriver)
+                {
+                    _dataAccess.DriverCarRepository.Delete(exitingDriver);
+                }
             }
-            else if (exitingDriver.UserID != carDetailsDto.DriverID)
+            else
             {
-                _dataAccess.DriverCarRepository.Delete(exitingDriver);
-                _dataAccess.DriverCarRepository.Add(new DriversCar { CarID = carDetailsDto.CarID, UserID = carDetailsDto.DriverID });
+                if (null == exitingDriver)
+                {
+                    _dataAccess.DriverCarRepository.Add(new DriversCar
+                    {
+                        CarID = carDetailsDto.CarID,
+                        UserID = carDetailsDto.DriverID
+                    });
+                }
+                else if (exitingDriver.UserID != carDetailsDto.DriverID)
+                {
+                    _dataAccess.DriverCarRepository.Delete(exitingDriver);
+                    _dataAccess.DriverCarRepository.Add(new DriversCar
+                    {
+                        CarID = carDetailsDto.CarID,
+                        UserID = carDetailsDto.DriverID
+                    });
+                }
             }
 
             var allUtilities = _dataAccess.CarsUtilityRepository.FindAllBy(u => u.CarID == carDetailsDto.CarID);
