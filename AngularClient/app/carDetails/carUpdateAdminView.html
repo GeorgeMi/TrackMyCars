@@ -59,7 +59,7 @@
                             </thead>
                             <tbody>
                             <tr ng-repeat="utility in ut.utilities  | filter:searchText">
-                                <td><input type="checkbox" ng-click="ctrl.checkbox(utility.UtilityID)"/>&nbsp;</td>
+                                <td><input type="checkbox" ng-click="ctrl.checkbox(utility.UtilityID)" ng-checked="ctrl.verify(utility.UtilityID)" />&nbsp;</td>
                                 <td>{{ utility.UtilityName }}</td>
                                 <td>{{ utility.KmNo }}</td>
                                 <td>{{ utility.MonthsNo }}</td>

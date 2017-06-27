@@ -22,11 +22,39 @@
         };
         vm.addCarMessage = '';
 
+        vm.checkbox = function (utilityId) {
+            // alert(utilityId);
+            if (vm.updateCar.UtilitiesIDs != undefined) {
+                if (vm.updateCar.UtilitiesIDs.indexOf(utilityId) > -1) {
+                    vm.updateCar.UtilitiesIDs.splice(vm.updateCar.UtilitiesIDs.indexOf(utilityId), 1);
+                } else {
+                    vm.updateCar.UtilitiesIDs.push(utilityId);
+                }
+            } else if (vm.updateCar.UtilitiesIDs == undefined) {
+                vm.updateCar.UtilitiesIDs = new Array(utilityId);
+                vm.updateCar.UtilitiesIDs.push(utilityId);
+            }
+
+            vm.updateCar.UtilitiesIDs = vm.updateCar.UtilitiesIDs.filter(function (n) { return n != undefined });
+        }
+
+        vm.verify = function (id) {
+            if (vm.updateCar.UtilitiesIDs.indexOf(id) > -1) {
+                return true;
+            }
+            return false;
+        }
+
         //<-----------------load page----------------------> 
         carResource.getCar.getCar(param,
             function (response) {
                 vm.updateCar = response.data[0];
                 
+                for (var i = 0; i <= vm.updateCar.UtilitiesIDs.length; i++) {
+                    alert(vm.updateCar.UtilitiesIDs[i]);
+                    vm.checkbox(vm.updateCar.UtilitiesIDs[i]);
+                }
+
                 $rootScope.isLoading = false; //loading gif
                 vm.message = null;
             },
@@ -40,8 +68,8 @@
                 }
             }
         );
-
-        //<-----------------add car----------------------> 
+        
+       //<-----------------update car----------------------> 
         vm.updateCarDetails = function () {
            
             if (vm.updateCar.regNo != '' && vm.updateCar.brand != '' && vm.updateCar.year != '' && vm.updateCar.kmNo != '' && vm.updateCar.kmNo >= 0) {
@@ -67,22 +95,6 @@
                         $rootScope.isLoading = false; //loading gif
                     });
             }
-        }
-
-        vm.checkbox = function (utilityId) {
-            // alert(utilityId);
-            if (vm.updateCar.UtilitiesIDs != undefined) {
-                if (vm.updateCar.UtilitiesIDs.indexOf(utilityId) > -1) {
-                    vm.updateCar.UtilitiesIDs.splice(vm.updateCar.UtilitiesIDs.indexOf(utilityId), 1);
-                } else {
-                    vm.updateCar.UtilitiesIDs.push(utilityId);
-                }
-            } else {
-                vm.updateCar.UtilitiesIDs = new Array(utilityId);
-                vm.updateCar.UtilitiesIDs.push(utilityId);
-            }
-
-            vm.updateCar.UtilitiesIDs = vm.updateCar.UtilitiesIDs.filter(function (n) { return n != undefined });
         }
     }
 }());
