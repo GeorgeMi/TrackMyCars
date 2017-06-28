@@ -73,33 +73,42 @@
         <div class="panel-body">
             <table class="table">
                 <thead>
-                    <tr>
-                        <td>ID</td>
-                        <td>Registration Number</td>
-                        <td>Brand</td>
-                        <td class="mobileHidden">Year</td>
-                        <td class="mobileHidden">KM</td>
-                        <td class="mobileHidden">Driver</td>
-                        <td class="mobileHidden">Utilities</td>
-                        <td>Action</td>
-                    </tr>
+                <tr>
+                    <td>Action</td>
+                    <td>Registration Number</td>
+                    <td>Brand</td>
+                    <td class="mobileHidden">Year</td>
+                    <td class="mobileHidden">KM</td>
+                    <td class="mobileHidden">Driver</td>
+                    <td class="mobileHidden">Utility Name</td>
+                    <td class="mobileHidden" colspan="2">Availability</td>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="car in ctrl.cars  | filter:searchText">
-                        <td>{{ car.CarID}}</td>
-                        <td>{{ car.RegNo}}</td>
-                        <td>{{ car.Brand}}</td>
-                        <td class="mobileHidden">{{ car.Year }}</td>
-                        <td class="mobileHidden">{{ car.KmNo }}</td>
-                        <td class="mobileHidden">{{ car.Driver }}</td>
-                        <td class="mobileHidden">{{ car.Utilities }}</td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="...">
-                                <button class="btn btn-default" ng-click="ctrl.deleteCar(car.CarID)">Delete</button>
-                                <button class="btn btn-default" ng-click="vm.changePage(ctrl.updateCar(car.CarID))">Update</button>
-                            </div>
-                        </td>
-                    </tr>
+                <tr ng-repeat="car in ctrl.cars  | filter:searchText">
+                    <td>
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button class="btn btn-default" ng-click="ctrl.deleteCar(car.CarID)">Delete</button>
+                            <button class="btn btn-default" ng-click="vm.changePage(ctrl.updateCar(car.CarID))">Update</button>
+                        </div>
+                    </td>
+                    <td>{{ car.RegNo }}</td>
+                    <td>{{ car.Brand }}</td>
+                    <td class="mobileHidden">{{ car.Year }}</td>
+                    <td class="mobileHidden">{{ car.KmNo }}</td>
+                    <td class="mobileHidden">{{ car.Driver }}</td>
+                    <td class="mobileHidden" colspan="3">
+                        <table class="table">
+                            <tbody>
+                            <tr ng-repeat="ut in car.Utilities">
+                                <td>{{ ut.UtilityName }}</td>
+                                <td>{{ ut.ExpirationDate }} days</td>
+                                <td>{{ ut.ExpirationKmNo }} km</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>

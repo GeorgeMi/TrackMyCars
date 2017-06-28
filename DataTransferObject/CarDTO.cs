@@ -1,4 +1,6 @@
-﻿namespace DataTransferObject
+﻿using System.Collections.Generic;
+
+namespace DataTransferObject
 {
     public class CarDTO
     {
@@ -8,5 +10,6 @@
         public int KmNo { get; set; }
         public string Brand { get; set; }
         public string Driver { get; set; }
+        public List<CarUtilityDetailsDTO> Utilities { get; set; }
     }
 }

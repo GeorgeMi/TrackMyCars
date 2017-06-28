@@ -21,8 +21,24 @@
                               }
                           }
                       }),
+
+            //all user cars
+            getUserCars: $resource(appSettings.serverPath + "/api/car/usercars/:username", { username: '@id' },
+                      {
+                          'getUserCars': {
+                              method: 'GET',
+                              headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'token': $cookies.get('token') },
+                              transformRequest: function (data, headersGetter) {
+                                  var str = [];
+                                  for (var d in data) {
+                                      str.push(encodeURIComponent(d) + "=" + encodeURIComponent(data[d]));
+                                  }
+                                  return str.join("&");
+                              }
+                          }
+                      }),
             //specific car
-            getCar: $resource(appSettings.serverPath + "/api/car/:car_id", { car_id: '@id' },
+            getCar: $resource(appSettings.serverPath + "/api/car/getcar/:car_id", { car_id: '@id' },
                      {
                          'getCar': {
                              method: 'GET',

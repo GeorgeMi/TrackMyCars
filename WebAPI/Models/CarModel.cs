@@ -46,6 +46,21 @@ namespace WebAPI.Models
         /// <summary>
         /// 
         /// </summary>
+        public List<CarDTO> GetAllUserCars(string username)
+        {
+            try
+            {
+                return _bl.CarLogic.GetAllUserCars(username);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public CarDetailsDTO GetCarDetails(int carId)
         {
             try

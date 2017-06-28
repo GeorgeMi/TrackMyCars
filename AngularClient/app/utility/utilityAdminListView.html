@@ -57,7 +57,6 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <td>ID</td>
                         <td>Name</td>
                         <td>Distance (KM)</td>
                         <td>Period (Months)</td>
@@ -67,7 +66,6 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="utility in vm.utilities  | filter:searchText">
-                        <td>{{ utility.UtilityID}}</td>
                         <td>{{ utility.UtilityName }}</td>
                         <td>{{ utility.KmNo }}</td>
                         <td>{{ utility.MonthsNo }}</td>

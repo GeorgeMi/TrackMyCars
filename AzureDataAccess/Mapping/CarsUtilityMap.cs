@@ -12,9 +12,6 @@ namespace AzureDataAccess.Mapping
             this.HasKey(t => t.CarUtilityID);
 
             // Properties
-            this.Property(t => t.CarUtilityID)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-
             this.Property(t => t.Description)
                 .HasMaxLength(250);
 

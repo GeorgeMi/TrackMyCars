@@ -49,6 +49,33 @@ namespace WebAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
+        [RequireToken]
+        [HttpGet]
+        [ActionName("usercars")]
+        public HttpResponseMessage Usercars(string id)
+        {
+            HttpResponseMessage responseMessage;
+            JSend json;
+
+            var list = _carModel.GetAllUserCars(id);
+
+            if (list.Count > 0)
+            {
+                json = new JSendData<CarDTO>("success", list);
+                responseMessage = Request.CreateResponse(HttpStatusCode.OK, json);
+            }
+            else
+            {
+                json = new JSendMessage("fail", "No items found");
+                responseMessage = Request.CreateResponse(HttpStatusCode.NotFound, json);
+            }
+
+            return responseMessage;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="id"></param>
         [RequireToken]
         [HttpGet]
@@ -105,13 +132,15 @@ namespace WebAPI.Controllers
         [RequireAdminToken]
         public HttpResponseMessage Put(CarDetailsDTO carDto)
         {
+
             HttpResponseMessage responseMessage;
             JSendMessage json;
+
             var response = _carModel.UpdateCar(carDto);
 
             if (response)
             {
-                json = new JSendMessage("success", "Car details updated added");
+                json = new JSendMessage("success", "Car details successfully updated");
                 responseMessage = Request.CreateResponse(HttpStatusCode.OK, json);
             }
             else

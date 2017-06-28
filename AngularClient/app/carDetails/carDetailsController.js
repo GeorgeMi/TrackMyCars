@@ -18,7 +18,7 @@
             Year: '',
             KmNo: '',
             DriverID: 0,
-            UtilitiesIDs: []
+            UtilitiesIDs: [{}]
         };
         vm.addCarMessage = '';
 
@@ -31,18 +31,11 @@
                     vm.updateCar.UtilitiesIDs.push(utilityId);
                 }
             } else if (vm.updateCar.UtilitiesIDs == undefined) {
-                vm.updateCar.UtilitiesIDs = new Array(utilityId);
+                vm.updateCar.UtilitiesIDs = [{}];
                 vm.updateCar.UtilitiesIDs.push(utilityId);
             }
 
             vm.updateCar.UtilitiesIDs = vm.updateCar.UtilitiesIDs.filter(function (n) { return n != undefined });
-        }
-
-        vm.verify = function (id) {
-            if (vm.updateCar.UtilitiesIDs.indexOf(id) > -1) {
-                return true;
-            }
-            return false;
         }
 
         //<-----------------load page----------------------> 
@@ -50,11 +43,6 @@
             function (response) {
                 vm.updateCar = response.data[0];
                 
-                for (var i = 0; i <= vm.updateCar.UtilitiesIDs.length; i++) {
-                    alert(vm.updateCar.UtilitiesIDs[i]);
-                    vm.checkbox(vm.updateCar.UtilitiesIDs[i]);
-                }
-
                 $rootScope.isLoading = false; //loading gif
                 vm.message = null;
             },
@@ -75,26 +63,52 @@
             if (vm.updateCar.regNo != '' && vm.updateCar.brand != '' && vm.updateCar.year != '' && vm.updateCar.kmNo != '' && vm.updateCar.kmNo >= 0) {
                 vm.updateCar.brand = vm.updateCar.brand.trim();
             }
+
             if (vm.updateCar.brand != '') {
                 //alert('haha2');
                 $rootScope.isLoading = true;
-                carResource.update.updateCarDetails(vm.updateCar,
+
+                var x = JSON.stringify(vm.updateCar);
+
+                carResource.update.updateCarDetails(x,
                     function (response) {
 
                         carResource.get.getCars(
                             function (response) {
-                               $rootScope.isLoading = false;
+                                $rootScope.isLoading = false;                              
                             },
                             function (error) {
+                                vm.created = response.status;
                                 vm.message = error.data.message;
                                 $rootScope.isLoading = false; //loading gif
                             });
+
+                        vm.messageForm = response.message;
+                        vm.created = response.status;
                     },
                     function (error) {
+                        vm.created = response.status;
                         vm.message = error.data.message;
                         $rootScope.isLoading = false; //loading gif
                     });
             }
+        }
+
+        vm.verifyUtilityId = function (id) {
+            if (vm.updateCar.UtilitiesIDs.indexOf(id) > -1) {
+                return true;
+            }
+            return false;
+        }
+
+        vm.verifyDriverId = function (id) {
+            if (id == 0 && vm.updateCar.DriverID == null) {
+                return true;
+            }
+            else if (id != 0 && vm.updateCar.DriverID == id) {
+                return true;
+            }           
+            return false;
         }
     }
 }());

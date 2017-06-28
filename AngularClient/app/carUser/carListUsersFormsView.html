@@ -21,17 +21,28 @@
                         <td class="mobileHidden">Year</td>
                         <td class="mobileHidden">KM</td>
                         <td class="mobileHidden">Drivers</td>
-                        <td class="mobileHidden">Utilities</td>
+                        <td class="mobileHidden">Utility Name</td>
+                        <td class="mobileHidden">Availability</td>
                     </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="car in ctrl.userCars  | filter:searchText">
-                        <td>{{ car.RegNo}}</td>
-                        <td>{{ car.Brand}}</td>
+                        <td>{{ car.RegNo }}</td>
+                        <td>{{ car.Brand }}</td>
                         <td class="mobileHidden">{{ car.Year }}</td>
                         <td class="mobileHidden">{{ car.KmNo }}</td>
-                        <td class="mobileHidden">{{ car.Drivers }}</td>
-                        <td class="mobileHidden">{{ car.Utilities }}</td>
+                        <td class="mobileHidden">{{ car.Driver }}</td>
+                        <td class="mobileHidden" colspan="3">
+                            <table class="table">
+                                <tbody>
+                                    <tr ng-repeat="ut in car.Utilities">
+                                        <td>{{ ut.UtilityName}}</td>
+                                        <td>{{ ut.ExpirationDate}} days</td>
+                                        <td>{{ ut.ExpirationKmNo}} km</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

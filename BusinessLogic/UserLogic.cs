@@ -248,7 +248,7 @@ namespace BusinessLogic
             mail.Subject = "Welcome to VoteMyPoll";
             mail.Body = "<h3>Hello " + username + ", </h3>";
             mail.Body +=
-                "<p>Thanks for signing up! Before you start, please verify your email address by clicking <a href=\"http://votemypoll.azurewebsites.net/#/?verifymail=" +
+                "<p>Thanks for signing up! Before you start, please verify your email address by clicking <a href=\"http://trackmycars.azurewebsites.net/#/?verifymail=" +
                 token + "\">here</a>.</p>";
             mail.Body += "<p>This link will expire in 24 hours if it's not activated.</p>";
             mail.Body += "<h5>The VoteMyPoll team</h5>";

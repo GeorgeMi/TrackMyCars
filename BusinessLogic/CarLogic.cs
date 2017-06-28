@@ -32,16 +32,135 @@ namespace BusinessLogic
         public List<CarDTO> GetAllCars()
         {
             var listCars = _dataAccess.CarRepository.GetAll().ToList();
+            var result = new List<CarDTO>();
 
-            return listCars.Select(c => new CarDTO
+            foreach (var c in listCars)
             {
-                CarID = c.CarID,
-                Brand = c.Brand,
-                KmNo = c.KmNo,
-                RegNo = c.RegNo,
-                Year = c.Year,
-                Driver = _dataAccess.DriverCarRepository.FindFirstBy(d => d.CarID == c.CarID)?.User?.Username ?? "-"
-            }).ToList();
+                var utilities = _dataAccess.CarsUtilityRepository.FindAllBy(u => u.CarID == c.CarID).ToList();
+                var list = new List<CarUtilityDetailsDTO>();
+
+                foreach (var u in utilities)
+                {
+                    int months;
+                    if (u.Utility.MonthsNo == null)
+                    {
+                        months = 0;
+                    }
+                    else
+                    {
+                        months = (int) u.Utility.MonthsNo;
+                    }
+
+                    int km;
+                    if (u.Utility.KmNo == null)
+                    {
+                        km = 0;
+                    }
+                    else
+                    {
+                        km = (int) u.Utility.KmNo;
+                    }
+
+                    var expirationDate = u.StartedDate.AddMonths(months).Subtract(DateTime.Today).Days;
+                    var kmNo = u.StartedKmNo + km - u.Car.KmNo;
+
+                    list.Add(new CarUtilityDetailsDTO
+                    {
+                        UtilityName = u.Utility.UtilityName,
+                        ExpirationDate = expirationDate >= 0 ? expirationDate : 0,
+                        ExpirationKmNo = kmNo >= 0 ? kmNo : 0
+                    });
+                }
+
+                var obj = new CarDTO
+                {
+                    CarID = c.CarID,
+                    Brand = c.Brand,
+                    KmNo = c.KmNo,
+                    RegNo = c.RegNo,
+                    Year = c.Year,
+                    Driver = _dataAccess.DriverCarRepository.FindFirstBy(d => d.CarID == c.CarID)?.User?.Username ?? "-",
+                    Utilities = list
+                };
+
+                result.Add(obj);
+            }
+
+            return result;            
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public List<CarDTO> GetAllUserCars(string username)
+        {
+            var listCars = new List<Car>();
+            foreach (var car in _dataAccess.CarRepository.GetAll().ToList())
+            {
+                var cardrivers = _dataAccess.DriverCarRepository.FindFirstBy(d => d.User.Username == username && d.CarID == car.CarID);
+
+                if (cardrivers != null)
+                {
+                    listCars.Add(car);
+                }
+            }
+            var result = new List<CarDTO>();
+
+            foreach (var c in listCars)
+            {
+                var utilities = _dataAccess.CarsUtilityRepository.FindAllBy(u => u.CarID == c.CarID).ToList();
+                var list = new List<CarUtilityDetailsDTO>();
+
+                foreach (var u in utilities)
+                {
+                    int months;
+                    if (u.Utility.MonthsNo == null)
+                    {
+                        months = 0;
+                    }
+                    else
+                    {
+                        months = (int)u.Utility.MonthsNo;
+                    }
+
+                    int km;
+                    if (u.Utility.KmNo == null)
+                    {
+                        km = 0;
+                    }
+                    else
+                    {
+                        km = (int)u.Utility.KmNo;
+                    }
+
+                    var expirationDate = u.StartedDate.AddMonths(months).Subtract(DateTime.Today).Days;
+                    var kmNo = u.StartedKmNo + km - u.Car.KmNo;
+
+                    list.Add(new CarUtilityDetailsDTO
+                    {
+                        UtilityName = u.Utility.UtilityName,
+                        ExpirationDate = expirationDate  >= 0 ? expirationDate : 0,
+                        ExpirationKmNo = kmNo >= 0 ? kmNo : 0,
+
+                    });
+                }
+
+                var obj = new CarDTO
+                {
+                    CarID = c.CarID,
+                    Brand = c.Brand,
+                    KmNo = c.KmNo,
+                    RegNo = c.RegNo,
+                    Year = c.Year,
+                    Driver = _dataAccess.DriverCarRepository.FindFirstBy(d => d.CarID == c.CarID)?.User?.Username ?? "-",
+                    Utilities = list
+                };
+
+                result.Add(obj);
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -51,7 +170,7 @@ namespace BusinessLogic
         public CarDetailsDTO GetCarDetails(int carId)
         {
             var car = _dataAccess.CarRepository.FindFirstBy(c => c.CarID == carId);
-            
+
             return new CarDetailsDTO
             {
                 CarID = car.CarID,
@@ -60,7 +179,7 @@ namespace BusinessLogic
                 RegNo = car.RegNo,
                 Year = car.Year,
                 DriverID = _dataAccess.DriverCarRepository.FindFirstBy(d => d.CarID == carId)?.UserID ?? 0,
-            UtilitiesIDs = _dataAccess.CarsUtilityRepository.FindAllBy(u => u.CarID == carId).Select(utility => utility.UtilityID).ToList()
+                UtilitiesIDs = _dataAccess.CarsUtilityRepository.FindAllBy(u => u.CarID == carId).Select(utility => utility.UtilityID).ToList()                            
             };
         }
 
@@ -105,7 +224,7 @@ namespace BusinessLogic
                 RegNo = carDetailsDto.RegNo,
                 Year = carDetailsDto.Year
             };
-            
+
             _dataAccess.CarRepository.Update(car);
 
             var exitingDriver = _dataAccess.DriverCarRepository.FindFirstBy(d => d.CarID == carDetailsDto.CarID);
@@ -137,19 +256,17 @@ namespace BusinessLogic
                     });
                 }
             }
-
-            var allUtilities = _dataAccess.CarsUtilityRepository.FindAllBy(u => u.CarID == carDetailsDto.CarID);
-            foreach (var utility in allUtilities)
+            
+            var allUtilities = _dataAccess.CarsUtilityRepository.FindAllBy(u => u.CarID == carDetailsDto.CarID).ToList();
+            foreach (var utility in allUtilities.Where(utility => !carDetailsDto.UtilitiesIDs.Contains(utility.UtilityID)))
             {
-                if (!carDetailsDto.UtilitiesIDs.Contains(utility.UtilityID))
-                {
-                    _dataAccess.CarsUtilityRepository.Delete(allUtilities.FirstOrDefault(u => u.UtilityID == utility.UtilityID));
-                }
+                _dataAccess.CarsUtilityRepository.Delete(allUtilities.FirstOrDefault(u => u.UtilityID == utility.UtilityID));
             }
 
             foreach (var utilityID in carDetailsDto.UtilitiesIDs)
             {
                 var exitingUtility = _dataAccess.CarsUtilityRepository.FindFirstBy(u => u.CarID == carDetailsDto.CarID && u.UtilityID == utilityID);
+
                 if (null == exitingUtility)
                 {
                     _dataAccess.CarsUtilityRepository.Add(new CarsUtility

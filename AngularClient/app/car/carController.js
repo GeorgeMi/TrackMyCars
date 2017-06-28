@@ -77,6 +77,7 @@
                                 vm.addCar.driverId = '';
                                 vm.cars = response.data;
                                 $rootScope.isLoading = false;
+                                vm.messageForm = response.message;
                             },
                             function (error) {
                                 vm.message = error.data.message;
@@ -108,6 +109,7 @@
                             }
                         }
                         $rootScope.isLoading = false;
+                        vm.messageForm = response.message;
                     },
                 function (error) {
                     vm.message = error.data.message;
