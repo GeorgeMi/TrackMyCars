@@ -4,7 +4,7 @@
         .module("common.services", ["ngResource"])
         .constant("appSettings",
         {
-             serverPath: "http://trackmycarswebapi.azurewebsites.net/"
+             serverPath: "https://trackmycarswebapi.azurewebsites.net/"
             // serverPath: "http://localhost:19692"
         });
 

@@ -245,13 +245,13 @@ namespace BusinessLogic
             var smtpServer = new SmtpClient("smtp.gmail.com");
             mail.From = new MailAddress("votemypoll@gmail.com");
             mail.To.Add(email);
-            mail.Subject = "Welcome to VoteMyPoll";
+            mail.Subject = "Welcome to TrackMyCars";
             mail.Body = "<h3>Hello " + username + ", </h3>";
             mail.Body +=
                 "<p>Thanks for signing up! Before you start, please verify your email address by clicking <a href=\"http://trackmycars.azurewebsites.net/#/?verifymail=" +
                 token + "\">here</a>.</p>";
             mail.Body += "<p>This link will expire in 24 hours if it's not activated.</p>";
-            mail.Body += "<h5>The VoteMyPoll team</h5>";
+            mail.Body += "<h5>The TrackMyCars team</h5>";
             mail.IsBodyHtml = true;
 
             smtpServer.Port = 587;
