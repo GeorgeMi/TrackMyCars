@@ -49,5 +49,28 @@ namespace WebAPI.Controllers
 
             return responseMessage;
         }
+
+        [RequireToken]
+        [HttpPost]
+        [ActionName("updateusers")]
+        public HttpResponseMessage UpdateUsers()
+        {
+            HttpResponseMessage responseMessage;
+            JSendMessage json;
+            var response = _contactModel.UpdateUsers();
+
+            if (response)
+            {
+                json = new JSendMessage("success", "Message sent successfully");
+                responseMessage = Request.CreateResponse(HttpStatusCode.OK, json);
+            }
+            else
+            {
+                json = new JSendMessage("fail", "Something bad happened");
+                responseMessage = Request.CreateResponse(HttpStatusCode.BadRequest, json);
+            }
+
+            return responseMessage;
+        }
     }
 }

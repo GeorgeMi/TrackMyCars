@@ -45,5 +45,22 @@ namespace WebAPI.Models
                 return false;
             }
         }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>true sau false</returns>
+        public bool UpdateUsers()
+        {
+            try
+            {
+                _bl.MessageLogic.UpdateUsers();
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }
