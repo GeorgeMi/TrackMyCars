@@ -4,6 +4,7 @@
  * Written by Miron George <george.miron2003@gmail.com>, 2016
  */
 
+using System;
 using DataTransferObject;
 using System.Net;
 using System.Net.Http;
@@ -25,11 +26,11 @@ namespace WebAPI.Controllers
         /// 
         /// </summary>
         [RequireToken]
-        public HttpResponseMessage Get()
+        public HttpResponseMessage Get(int? id = null)
         {
             HttpResponseMessage responseMessage;
             JSend json;
-            var list = _utilityModel.GetAllUtilities();
+            var list = _utilityModel.GetAllUtilities(id);
 
             if (list.Count > 0)
             {

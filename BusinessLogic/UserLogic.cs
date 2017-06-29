@@ -49,21 +49,14 @@ namespace BusinessLogic
         {
             var userList = _dataAccess.UserRepository.GetAll().ToList();
             userList = userList.Skip(page*perPage).Take(perPage).ToList();
-            var userDtoList = new List<UserDetailDTO>();
-
-            foreach (var u in userList)
+            var userDtoList = userList.Select(u => new UserDetailDTO
             {
-                var userDto = new UserDetailDTO
-                {
-                    Email = u.Email,
-                    Password = u.Password,
-                    Role = u.Role,
-                    Username = u.Username,
-                    UserID = u.UserID
-                };
-
-                userDtoList.Add(userDto);
-            }
+                Email = u.Email,
+                Password = u.Password,
+                Role = u.Role,
+                Username = u.Username,
+                UserID = u.UserID
+            }).ToList();
 
             return userDtoList.ToList();
         }
@@ -88,7 +81,7 @@ namespace BusinessLogic
             if (string.IsNullOrWhiteSpace(userDto.Username) || string.IsNullOrWhiteSpace(userDto.Password) ||
                 string.IsNullOrWhiteSpace(userDto.Email))
             {
-                throw new System.Exception("failed");
+                throw new Exception("failed");
             }
 
             // Adauga un user
@@ -118,18 +111,10 @@ namespace BusinessLogic
         public List<UsernameDTO> GetAllUsernames()
         {
             var userList = _dataAccess.UserRepository.GetAll().ToList();
-            var userDtoList = new List<UsernameDTO>();
-
-            foreach (var u in userList)
+            var userDtoList = userList.Select(u => new UsernameDTO
             {
-                var userDto = new UsernameDTO
-                {
-                    Username = u.Username,
-                    UserID = u.UserID
-                };
-
-                userDtoList.Add(userDto);
-            }
+                Username = u.Username, UserID = u.UserID
+            }).ToList();
 
             return userDtoList.ToList();
         }
@@ -154,6 +139,49 @@ namespace BusinessLogic
             return userDto;
         }
 
+        public IEnumerable<User> GetUserListForMail()
+        {
+            var userList = new List<User>();
+            foreach (var car in _dataAccess.CarsUtilityRepository.GetAll())
+            {
+                int months;
+                if (car.Utility.MonthsNo == null)
+                {
+                    months = 0;
+                }
+                else
+                {
+                    months = (int)car.Utility.MonthsNo;
+                }
+
+                int km;
+                if (car.Utility.KmNo == null)
+                {
+                    km = 0;
+                }
+                else
+                {
+                    km = (int)car.Utility.KmNo;
+                }
+
+                var carUtilityList = _dataAccess.CarsUtilityRepository.FindAllBy(d => d.StartedDate.AddMonths(months).Subtract(DateTime.Today).Days <= 10 || (car.StartedKmNo + km - car.Car.KmNo) < 100).ToList();
+
+                foreach (var carUtility in carUtilityList)
+                {
+                    var driversCarsList = _dataAccess.DriverCarRepository.FindAllBy(c => c.CarID == carUtility.CarID).ToList();
+                    foreach (var driver in driversCarsList)
+                    {
+                        var user = _dataAccess.UserRepository.FindFirstBy(u => u.UserID == driver.UserID);
+                        if (!userList.Contains(user))
+                        {
+                            userList.Add(user);
+                        }
+                    }
+                }
+            }
+            return userList;
+        }
+
         /// <summary>
         /// Stergere utilizator
         /// </summary>
@@ -161,7 +189,7 @@ namespace BusinessLogic
         public void DeleteUser(int id)
         {
             // Sterge user dupa id, dar care difera de contul de admin "Admin" care nu poate fi sters niciodata
-            var u = _dataAccess.UserRepository.FindFirstBy(user => user.UserID == id && user.Username != "Admin");
+            var u = _dataAccess.UserRepository.FindFirstBy(user => user.UserID == id && user.Role != "admin");
             if (null == u)
             {
                 throw new Exception("'Admin' cannot be deleted");

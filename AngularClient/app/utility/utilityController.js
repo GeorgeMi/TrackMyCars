@@ -31,11 +31,20 @@
         );
        
         vm.addUtility = function() {
-            if (vm.utility.utilityName != '') {
+            if (vm.utility.utilityName != '' && vm.utility.kmNo != '' && vm.utility.kmNo != '' && vm.utility.monthsNo != '' && vm.utility.description != '' && vm.utility.monthsNo > 0 && vm.utility.kmNo >0) {
                 vm.utility.utilityName = vm.utility.utilityName.replace(/ /g, '');
+                vm.utility.description = vm.utility.description.replace(/ /g, '');
+
+                if (isNaN(vm.utility.monthsNo)) {
+                    vm.utility.kmNo = vm.utility.kmNo.trim();
+                }
+
+                if (isNaN(vm.utility.monthsNo)) {
+                    vm.utility.year = vm.utility.year.trim();
+                }
             }
 
-            if (vm.utility.utilityName != '') {
+            if (vm.utility.utilityName != '' && vm.utility.kmNo != '' && vm.utility.kmNo != '' && vm.utility.monthsNo != '' && vm.utility.description != '' && vm.utility.monthsNo > 0 && vm.utility.kmNo > 0) {
                 $rootScope.isLoading = true;
                 utilityResource.add.addUtility(vm.utility,
                     function(response) {

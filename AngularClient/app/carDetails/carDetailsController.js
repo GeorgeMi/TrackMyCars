@@ -6,11 +6,32 @@
 
     function CarDetailsController(carResource, $cookies, $rootScope, $window) {
         var vm = this;
-
-        var param = { car_id: $cookies.get('update_car') };
+        var param;
 
         vm.message = null;
         $rootScope.isLoading = true; //loading gif
+        this.initialize = function (id) {
+            param = { car_id: id };
+
+            //<-----------------load page----------------------> 
+            carResource.getCar.getCar(param,
+                function (response) {
+                    vm.updateCar = response.data[0];
+
+                    $rootScope.isLoading = false; //loading gif
+                    vm.message = null;
+                },
+
+                function (error) {
+                    vm.message = error.data.message;
+                    vm.Next = false;
+                    $rootScope.isLoading = false; //loading gif
+                    if (vm.message == "Invalid Authorization Key") {
+                        $window.location.reload();
+                    }
+                }
+            );
+        }
 
         vm.updateCar = {
             RegNo: '',
@@ -38,25 +59,7 @@
             vm.updateCar.UtilitiesIDs = vm.updateCar.UtilitiesIDs.filter(function (n) { return n != undefined });
         }
 
-        //<-----------------load page----------------------> 
-        carResource.getCar.getCar(param,
-            function (response) {
-                vm.updateCar = response.data[0];
-                
-                $rootScope.isLoading = false; //loading gif
-                vm.message = null;
-            },
-
-            function (error) {
-                vm.message = error.data.message;
-                vm.Next = false;
-                $rootScope.isLoading = false; //loading gif
-                if (vm.message == "Invalid Authorization Key") {
-                    $window.location.reload();
-                }
-            }
-        );
-        
+       
        //<-----------------update car----------------------> 
         vm.updateCarDetails = function () {
            
@@ -109,6 +112,12 @@
                 return true;
             }           
             return false;
+        }
+
+        vm.reset = function () {
+            vm.created = null;
+            vm.message = null;
+            $rootScope.isLoading = false;
         }
     }
 }());

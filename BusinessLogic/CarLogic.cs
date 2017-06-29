@@ -200,11 +200,11 @@ namespace BusinessLogic
 
             var exitingDriver = _dataAccess.DriverCarRepository.FindFirstBy(d => d.CarID == carId);
             
-            if (null == exitingDriver)
+            if (null == exitingDriver && carDetailsDto.DriverID != 0)
             {
                 _dataAccess.DriverCarRepository.Add(new DriversCar { CarID = carId, UserID = carDetailsDto.DriverID });
             }
-            else if (exitingDriver.UserID != carDetailsDto.DriverID)
+            else if (exitingDriver?.UserID != carDetailsDto.DriverID && carDetailsDto.DriverID != 0)
             {
                 _dataAccess.DriverCarRepository.Delete(exitingDriver);
                 _dataAccess.DriverCarRepository.Add(new DriversCar { CarID = carId, UserID = carDetailsDto.DriverID });

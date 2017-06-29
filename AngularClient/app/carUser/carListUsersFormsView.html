@@ -35,13 +35,59 @@
                         <td class="mobileHidden" colspan="3">
                             <table class="table">
                                 <tbody>
-                                    <tr ng-repeat="ut in car.Utilities">
-                                        <td>{{ ut.UtilityName}}</td>
-                                        <td>{{ ut.ExpirationDate}} days</td>
-                                        <td>{{ ut.ExpirationKmNo}} km</td>
-                                    </tr>
+                                <tr ng-repeat="ut in car.Utilities">
+                                    <td>{{ ut.UtilityName}}</td>
+                                    <td>{{ ut.ExpirationDate}} days</td>
+                                    <td>{{ ut.ExpirationKmNo}} km</td>
+                                </tr>
                                 </tbody>
                             </table>
+                        </td>
+                        <td class="mobileHidden" colspan="2">
+                            <!-- Trigger the modal with a button -->
+                            <button class="btn btn-default" data-toggle="modal" data-target="#myModal{{car.CarID}}" ng-click="" ng-if="car.Utilities.length >0">Details</button>
+
+                            <!-- Modal -->
+                            <div id="myModal{{car.CarID}}" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">Utilities for {{ car.Brand }} {{ car.RegNo }} </h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="panel panel-default" ng-controller="UtilityDetailsController as ut" ng-init="ut.initialize(car.CarID)">
+                                                <div class="panel-body">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <td>Name</td>
+                                                                <td>Distance (KM)</td>
+                                                                <td>Period (Months)</td>
+                                                                <td>Description</td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="utility in ut.utilities">
+                                                                <td>{{ utility.UtilityName }}</td>
+                                                                <td>{{ utility.KmNo }}</td>
+                                                                <td>{{ utility.MonthsNo }}</td>
+                                                                <td>{{ utility.Description }}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     </tbody>

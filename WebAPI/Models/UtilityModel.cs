@@ -31,11 +31,11 @@ namespace WebAPI.Models
         /// <summary>
         /// 
         /// </summary>
-        public List<UtilityDTO> GetAllUtilities()
+        public List<UtilityDTO> GetAllUtilities(int? id)
         {
             try
             {
-                return _bl.UtilityLogic.GetAllUtilities();
+                return _bl.UtilityLogic.GetAllUtilities(id);
             }
             catch
             {

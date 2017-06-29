@@ -39,7 +39,7 @@ namespace WebAPI.Controllers
             var state = GetState();
 
             var list = new List<UtilityDTO>();
-            list = _carsUtilitiesModel.GetAllUtilities();
+            list = _carsUtilitiesModel.GetAllUtilities(null);
 
             if (list.Count > 0)
             {

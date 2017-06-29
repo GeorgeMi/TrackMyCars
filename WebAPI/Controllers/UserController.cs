@@ -115,7 +115,7 @@ namespace WebAPI.Controllers
             }
             else
             {
-                json = new JSendMessage("fail", "Something bad happened");
+                json = new JSendMessage("fail", "Selected user cannot be deleted");
                 responseMessage = Request.CreateResponse(HttpStatusCode.BadRequest, json);
             }
 

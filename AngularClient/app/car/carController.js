@@ -56,15 +56,55 @@
             }
         );
 
+        vm.reset = function () {
+            carResource.get.getCars(
+           function (response) {
+               vm.cars = response.data;
+               $rootScope.isLoading = false; //loading gif
+               vm.message = null;
+
+               if (vm.cars.length < vm.per_page) {
+                   vm.Next = false;
+               }
+               else {
+                   vm.Next = true;
+               }
+
+           },
+
+           function (error) {
+               vm.message = error.data.message;
+               vm.Next = false;
+               $rootScope.isLoading = false; //loading gif
+               if (vm.message == "Invalid Authorization Key") {
+                   $window.location.reload();
+               }
+           }
+       );
+        }
 
         //<-----------------add car----------------------> 
         vm.sendCarDetails = function () {
-            if (vm.addCar.regNo != '' && vm.addCar.brand != '' && vm.addCar.year != '' && vm.addCar.kmNo != '' && vm.addCar.kmNo >= 0) {
+            if (vm.addCar.regNo != '' && vm.addCar.brand != '' && vm.addCar.year != '' && vm.addCar.kmNo != '' && vm.addCar.kmNo >= 0 && vm.addCar.year > 1990) {
                 vm.addCar.brand = vm.addCar.brand.trim();
+                if (isNaN(vm.addCar.year)) {
+                    vm.addCar.year = vm.addCar.year.trim();
+                }
+
+                if (isNaN(vm.addCar.kmNo)) {
+                    vm.addCar.kmNo = vm.addCar.kmNo.trim();
+                }
+               
+                vm.addCar.regNo = vm.addCar.regNo.trim();
+
+                if (vm.addCar.driverId == '') {
+                    vm.addCar.driverId = 0;
+                }
             }
 
-            if (vm.addCar.regNo != '' && vm.addCar.brand != '' && vm.addCar.year != '' && vm.addCar.kmNo != '' && vm.addCar.kmNo >= 0) {
+            if (vm.addCar.regNo != '' && vm.addCar.brand != '' && vm.addCar.year != '' && vm.addCar.kmNo != '' && vm.addCar.kmNo >= 0 && vm.addCar.year > 1990) {
                 $rootScope.isLoading = true;
+
                 carResource.add.sendCarDetails(vm.addCar,
                     function (response) {
 
@@ -124,78 +164,6 @@
             $cookies.remove('update_car');
             $cookies.put('update_car', id);
             return 'update_cars';
-        }
-
-        //<-----------------change items per page----------------------> 
-        vm.itemsPerPage = vm.per_page;
-        vm.chosePerPage = function () {
-            //schimba numarul de elemente de pe pagina
-
-            if (vm.itemsPerPage != vm.per_page) {
-
-                $rootScope.isLoading = true;
-                vm.per_page = vm.itemsPerPage;
-                vm.page_nr = 0;
-                var param = { page_nr: 0, per_page: vm.itemsPerPage, state: vm.state };
-                carResource.get.getCars(param,
-
-                    function (response) {
-                        vm.cars = response.data;
-                        $rootScope.isLoading = false; //loading gif
-                        vm.message = null;
-
-                       },
-
-                    function (error) {
-                        vm.message = error.data.message;
-                        vm.Next = false;
-                        $rootScope.isLoading = false; //loading gif
-                    });
-
-            }
-        }
-        //<-----------------change page----------------------> 
-        vm.chosePageNr = function (id) {
-            //schimba numarul paginii
-            $rootScope.isLoading = true;
-            vm.page_nr = id;
-            var param = { state: vm.state, page_nr: id, per_page: vm.itemsPerPage };
-
-            if (vm.page_nr <= 0) {
-                vm.Prev = false;
-            }
-            else {
-                vm.Prev = true;
-            }
-
-            carResource.get.getCars(param,
-
-               function (response) {
-                   vm.cars = response.data;
-                   $rootScope.isLoading = false; //loading gif
-                   vm.message = null;
-
-                   if (vm.cars.length < vm.per_page) {
-                       vm.Next = false;
-                   }
-                   else {
-                       vm.Next = true;
-                   }
-
-                   if (vm.page_nr <= 0) {
-                       vm.Prev = false;
-                   }
-                   else {
-                       vm.Prev = true;
-                   }
-
-               },
-
-               function (error) {
-                   vm.message = error.data.message;
-                   vm.Next = false;
-                   $rootScope.isLoading = false; //loading gif
-               });
         }
     }
 }());

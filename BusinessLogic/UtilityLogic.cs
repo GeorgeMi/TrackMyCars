@@ -28,9 +28,21 @@ namespace BusinessLogic
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<UtilityDTO> GetAllUtilities()
+        public List<UtilityDTO> GetAllUtilities(int? id)
         {
-            var listUtilities = _dataAccess.UtilityRepository.GetAll().ToList();
+            var listUtilities =  new List<Utility>();
+            if (id == null)
+            {
+                listUtilities = _dataAccess.UtilityRepository.GetAll().ToList();
+            }
+            else
+            {
+                var ut = _dataAccess.CarsUtilityRepository.FindAllBy(c => c.CarID == id).ToList();
+                foreach (var car in ut)
+                {
+                    listUtilities.AddRange(_dataAccess.UtilityRepository.FindAllBy(u => u.UtilityID == car.UtilityID).ToList());
+                }
+            }
 
             return listUtilities.Select(u => new UtilityDTO
             {
