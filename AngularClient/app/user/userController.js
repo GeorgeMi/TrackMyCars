@@ -12,9 +12,8 @@
         vm.Prev = false; // se afiseaza "prev page" la paginare
         vm.Next = true; // se afiseaza "next page" la paginare
         $rootScope.isLoading = true;
-        var param = { page_nr: vm.page_nr, per_page: vm.per_page };
        
-        userResource.get.getUsers(param,
+        userResource.get.getUsers(
             function (response) {
                 vm.users = response.data;
                 vm.message = null;
@@ -111,88 +110,7 @@
         }
 
 
-        vm.itemsPerPage = vm.per_page;
-        vm.chosePerPage = function () {
-            //schimba numarul de elemente de pe pagina
-
-            if (vm.itemsPerPage != vm.per_page) {
-
-                $rootScope.isLoading = true;
-                vm.per_page = vm.itemsPerPage;
-                vm.page_nr = 0;
-                var param = { page_nr: vm.page_nr, per_page: vm.per_page };
-       
-                userResource.get.getUsers(param,
-                    function (response) {
-                        vm.message = null;
-                        vm.users = response.data;
-                    $rootScope.isLoading = false;
-
-                    if (vm.users.length < vm.per_page) {
-                        vm.Next = false;
-                    }
-                    else {
-                        vm.Next = true;
-                    }
-                    if (vm.page_nr <= 0) {
-                        vm.Prev = false;
-                    }
-                    else {
-                        vm.Prev = true;
-                    }
-                  
-                    },
-                function (error) {
-                    vm.message = error.data.message;
-                    vm.Next = false;
-                    $rootScope.isLoading = false; //loading gif
-                });
-               
-            }
-        }
-
-        vm.chosePageNr = function (id) {
-            //schimba numarul paginii
-            $rootScope.isLoading = true;
-            vm.page_nr = id;
-            var param = { page_nr: vm.page_nr, per_page: vm.per_page };
-
-            if (vm.page_nr <= 0) {
-                vm.Prev = false;
-            }
-            else {
-                vm.Prev = true;
-            }
-            
-            userResource.get.getUsers(param,
-                function (response) {
-                    vm.message = null;
-                    vm.users = response.data;
-                $rootScope.isLoading = false;
-                
-                if (vm.users.length < vm.per_page) {
-                    vm.Next = false;
-                }
-                else {
-                    vm.Next = true;
-                }
-                if (vm.page_nr <= 0) {
-                    vm.Prev = false;
-                }
-                else {
-                    vm.Prev = true;
-                }
-
-                },
-             function (error) {
-                 vm.message = error.data.message;
-                 vm.Next = false;
-                 $rootScope.isLoading = false; //loading gif
-             });
-           
-        }
-     
-        vm.viewSendMessage = function (id, username) {
+      vm.viewSendMessage = function (id, username) {
            // alert(id+" "+username);
             $cookies.remove('receiver_id');
             $cookies.remove('receiver_username');
@@ -200,6 +118,22 @@
             $cookies.put('receiver_id', id);
             $cookies.put('receiver_username', username);
             return 'contact_admin_redirect';
-        }
+      }
+
+      vm.countAdminUsers = function () {
+          var count = 0;
+          for (var i = 0; i < vm.users.length ; i++) {
+
+              if (vm.users[i].Role === 'admin') {
+                  count++;
+              }
+          }
+
+          if (count > 1) {
+              return false;
+          }
+
+          return true;
+      }
     }
 }());

@@ -100,7 +100,6 @@ namespace BusinessLogic
             smtpServer.EnableSsl = true;
 
             smtpServer.Send(mail);
-
         }      
     }
 }

@@ -16,7 +16,6 @@
             <table class="table">
                 <thead>
                     <tr >
-                        <td class="mobileHidden">ID</td>
                         <td>Username</td>
                         <!-- <td class="mobileHidden">Password</td> -->
                         <td class="mobileHidden">Email</td>
@@ -26,17 +25,16 @@
                 </thead>
                 <tbody >
                     <tr ng-repeat="user in ctrl.users  | filter:searchText">
-                        <td class="mobileHidden">{{ user.UserID}}</td>
                         <td>{{ user.Username }}</td>
                        <!-- <td class="mobileHidden">{{ user.Password }}</td> -->
                         <td class="mobileHidden">{{ user.Email }}</td>
                         <td>{{ user.Role }}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="...">
-                                <button ng-if="user.Role =='admin' && user.Username != 'Admin'" class="btn btn-default" ng-click="ctrl.demote(user.UserID)">Demote&nbsp;</button>
-                                <button ng-if="user.Role =='user' && user.Username != 'Admin'" class="btn btn-default" ng-click="ctrl.promote(user.UserID)">Promote</button>
+                                <button ng-if="user.Role =='admin'" class="btn btn-default" ng-click="ctrl.demote(user.UserID)" ng-disabled="ctrl.countAdminUsers()">Demote&nbsp;</button>
+                                <button ng-if="user.Role =='user'" class="btn btn-default" ng-click="ctrl.promote(user.UserID)">Promote</button>
                                 <button class="btn btn-default" ng-click="vm.changePage(ctrl.viewSendMessage(user.UserID, user.Username))">Send message</button>
-                                <button ng-if="user.Username != 'Admin'" class="btn btn-default" ng-click="ctrl.deleteUser(user.UserID)">Delete</button>
+                                <button ng-if="user.Username != 'Admin'" class="btn btn-default" ng-click="ctrl.deleteUser(user.UserID)" ng-disabled="ctrl.countAdminUsers()">Delete</button>
                             </div>
                         </td>
                     </tr>

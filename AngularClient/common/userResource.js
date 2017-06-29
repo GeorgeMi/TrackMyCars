@@ -6,7 +6,7 @@
 
     function userResource($resource, appSettings, $cookies) {
             return {
-                get: $resource(appSettings.serverPath + "/api/user?page=:page_nr&per_page=:per_page", { page_nr: '@id', per_page: '@id' },
+                get: $resource(appSettings.serverPath + "/api/user",null,
                           {
                               'getUsers': {
                                   method: 'GET',
@@ -92,5 +92,4 @@
                   })
             }
     }
-
 }());

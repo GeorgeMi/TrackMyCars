@@ -164,7 +164,7 @@ namespace BusinessLogic
                     km = (int)car.Utility.KmNo;
                 }
 
-                var carUtilityList = _dataAccess.CarsUtilityRepository.FindAllBy(d => d.StartedDate.AddMonths(months).Subtract(DateTime.Today).Days <= 10 || (car.StartedKmNo + km - car.Car.KmNo) < 100).ToList();
+                var carUtilityList = _dataAccess.CarsUtilityRepository.FindAllBy(d => d.StartedDate.AddMonths(months).Subtract(DateTime.Today).Days <= 15 && (car.StartedKmNo + km - car.Car.KmNo) < 200).ToList();
 
                 foreach (var carUtility in carUtilityList)
                 {
