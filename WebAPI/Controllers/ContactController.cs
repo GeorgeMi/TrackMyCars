@@ -31,10 +31,11 @@ namespace WebAPI.Controllers
         {
             HttpResponseMessage responseMessage;
             JSendMessage json;
-
+           
             // Preluare token pentru a identifica utilizatorul
             var token = Request.Headers.SingleOrDefault(x => x.Key == "token").Value.First();
             var response = _contactModel.SendMessage(token, contactMessageDto);
+
 
             if (response)
             {
@@ -51,7 +52,7 @@ namespace WebAPI.Controllers
         }
 
         [RequireToken]
-        [HttpPost]
+        [HttpGet]
         [ActionName("updateusers")]
         public HttpResponseMessage UpdateUsers()
         {

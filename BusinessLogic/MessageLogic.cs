@@ -4,6 +4,7 @@
  * Written by Miron George <george.miron2003@gmail.com>, 2016
  */
 
+using System;
 using AzureDataAccess;
 using DataTransferObject;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace BusinessLogic
         /// <param name="contactMessageDto"></param>
         public void SendMessage(string token, ContactMessageDTO contactMessageDto)
         {
-            if (string.IsNullOrWhiteSpace(contactMessageDto.Category) || string.IsNullOrWhiteSpace(contactMessageDto.Message) || contactMessageDto.Receiver < 0)
+           if (string.IsNullOrWhiteSpace(contactMessageDto.Category) || string.IsNullOrWhiteSpace(contactMessageDto.Message) || contactMessageDto.Receiver < 0)
                 throw new System.Exception("Values cannot be null");
 
             var userId = _dataAccess.TokenRepository.FindFirstBy(t => t.TokenString.Equals(token)).UserID;

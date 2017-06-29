@@ -38,7 +38,7 @@ namespace WebAPI.Models
             try
             {
                 _bl.MessageLogic.SendMessage(token, contactMessageDto);
-                return true;
+               return true;
             }
             catch(Exception ex)
             {

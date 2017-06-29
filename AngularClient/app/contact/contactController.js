@@ -37,7 +37,7 @@
 
                     //nu s-a trimis
                     function(error) {
-                        console.log(error)
+                        console.log(error);
                         vm.messageContact = error.data.message;
                         vm.sent = error.data.status;
                         $rootScope.isLoading = false;
