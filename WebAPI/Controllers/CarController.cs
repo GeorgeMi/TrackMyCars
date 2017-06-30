@@ -76,6 +76,32 @@ namespace WebAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
+        [RequireToken]
+        [HttpGet]
+        [ActionName("utilitiescar")]
+        public HttpResponseMessage Utilitiescar(int id)
+        {
+            HttpResponseMessage responseMessage;
+            JSend json;
+            var list = _carModel.GetAllCarUtilities(id);
+
+            if (list.Count > 0)
+            {
+                json = new JSendData<UtilityDTO>("success", list);
+                responseMessage = Request.CreateResponse(HttpStatusCode.OK, json);
+            }
+            else
+            {
+                json = new JSendMessage("fail", "No items found");
+                responseMessage = Request.CreateResponse(HttpStatusCode.NotFound, json);
+            }
+
+            return responseMessage;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="id"></param>
         [RequireToken]
         [HttpGet]

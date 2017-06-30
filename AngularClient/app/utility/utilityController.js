@@ -10,12 +10,13 @@
     function UtilityController(utilityResource, $cookies, $rootScope) {
         var vm = this;
         $rootScope.isLoading = true;//loading gif
-        
+        var param;
+
         vm.utility =  {
-            utilityName: '',
-            kmNo: '',
-            monthsNo: '',
-            description: ''
+            UtilityName: '',
+            KmNo: '',
+            MonthsNo: '',
+            Description: ''
         };
        
         utilityResource.get.getUtilities(
@@ -29,32 +30,49 @@
                 $rootScope.isLoading = false; //loading gif
             }
         );
-       
-        vm.addUtility = function() {
-            if (vm.utility.utilityName != '' && vm.utility.kmNo != '' && vm.utility.kmNo != '' && vm.utility.monthsNo != '' && vm.utility.description != '' && vm.utility.monthsNo > 0 && vm.utility.kmNo >0) {
-                vm.utility.utilityName = vm.utility.utilityName.replace(/ /g, '');
-                vm.utility.description = vm.utility.description.replace(/ /g, '');
 
-                if (isNaN(vm.utility.monthsNo)) {
-                    vm.utility.kmNo = vm.utility.kmNo.trim();
+        this.initialize = function (id) {
+            param = { ut_id: id };
+
+            utilityResource.getUtility.getUtility(param,
+            function (response) {
+                vm.utility = response.data[0];
+
+                $rootScope.isLoading = false;
+                vm.message = null;
+            },
+            function (error) {
+                vm.message = error.data.message;
+                $rootScope.isLoading = false; //loading gif
+            }
+        );
+        }
+       
+        vm.addUtility = function () {
+            if (vm.utility.UtilityName != '' && vm.utility.KmNo != '' && vm.utility.KmNo != '' && vm.utility.MonthsNo != '' && vm.utility.Description != '' && vm.utility.MonthsNo > -1 && vm.utility.KmNo > -1) {
+                vm.utility.UtilityName = vm.utility.UtilityName.replace(/ /g, '');
+                vm.utility.Description = vm.utility.Description.replace(/ /g, '');
+
+                if (isNaN(vm.utility.MonthsNo)) {
+                    vm.utility.KmNo = vm.utility.KmNo.trim();
                 }
 
-                if (isNaN(vm.utility.monthsNo)) {
+                if (isNaN(vm.utility.MonthsNo)) {
                     vm.utility.year = vm.utility.year.trim();
                 }
             }
-
-            if (vm.utility.utilityName != '' && vm.utility.kmNo != '' && vm.utility.kmNo != '' && vm.utility.monthsNo != '' && vm.utility.description != '' && vm.utility.monthsNo > 0 && vm.utility.kmNo > 0) {
+            
+            if (vm.utility.UtilityName != '' && vm.utility.KmNo != '' && vm.utility.KmNo != '' && vm.utility.MonthsNo != '' && vm.utility.Description != '' && vm.utility.MonthsNo > -1 && vm.utility.KmNo > -1) {
                 $rootScope.isLoading = true;
                 utilityResource.add.addUtility(vm.utility,
                     function(response) {
 
                         utilityResource.get.getUtilities(
                             function(response) {
-                                vm.utility.utilityName = '';
-                                vm.utility.kmNo = '';
-                                vm.utility.monthsNo = '';
-                                vm.utility.description = '';
+                                vm.utility.UtilityName = '';
+                                vm.utility.KmNo = '';
+                                vm.utility.MonthsNo = '';
+                                vm.utility.Description = '';
                                 vm.utilities = response.data;
                                 $rootScope.isLoading = false;
                             },
@@ -102,6 +120,53 @@
             //alert("cookie");
             $cookies.put('utility_id', id);
             return 'utility_forms';
+        }
+
+        //<-----------------update car----------------------> 
+        vm.updateUtility = function () {
+
+            if (vm.utility.UtilityName != '' && vm.utility.KmNo != '' && vm.utility.KmNo != '' && vm.utility.MonthsNo != '' && vm.utility.Description != '' && vm.utility.MonthsNo > -1 && vm.utility.KmNo > -1) {
+                vm.utility.UtilityName = vm.utility.UtilityName.replace(/ /g, '');
+                vm.utility.Description = vm.utility.Description.replace(/ /g, '');
+
+                if (isNaN(vm.utility.MonthsNo)) {
+                    vm.utility.KmNo = vm.utility.KmNo.trim();
+                }
+
+                if (isNaN(vm.utility.MonthsNo)) {
+                    vm.utility.year = vm.utility.year.trim();
+                }
+            }
+            
+            if (vm.utility.UtilityName != '' && vm.utility.KmNo != '' && vm.utility.KmNo != '' && vm.utility.MonthsNo != '' && vm.utility.Description != '' && vm.utility.MonthsNo > -1 && vm.utility.KmNo > -1) {
+                $rootScope.isLoading = true;
+                utilityResource.update.updateUtility(vm.utility,
+                    function(response) {
+
+                        vm.messageForm = response.message;
+                        vm.created = response.status;
+                    },
+                    function(error) {
+                        vm.created = response.status;
+                        vm.message = error.data.message;
+                        $rootScope.isLoading = false;
+                    });
+            }                         
+        }
+
+        vm.reset = function() {
+            utilityResource.get.getUtilities(
+                function(response) {
+                    vm.utilities = response.data;
+                    $rootScope.isLoading = false; //loading gif
+                    vm.message = null;
+                },
+                function(error) {
+                    vm.message = error.data.message;
+                    vm.Next = false;
+                    $rootScope.isLoading = false; //loading gif               
+                }
+            );
         }
     }
 }());

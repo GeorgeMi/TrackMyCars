@@ -13,7 +13,7 @@
     <link href="Content/loadingGif.css" rel="stylesheet" />
 
 </head>
-<body ng-app="app" ng-controller="MainController as vm" data-ng-init="vm.registerToken()" class="ng-cloak">
+<body ng-app="app" ng-controller="MainController as vm" data-ng-init="vm.forceSSL();vm.registerToken()" class="ng-cloak">
 
     <!-- Navbar -->
     <nav class="navbar navbar-default ">
@@ -56,45 +56,13 @@
     </nav>
 
     <!-- Container -->
-    <div class="container">
-        <form class="form-horizontal" role="form" ng-hide="vm.isLoggedIn">
-            <center>
-                <img src="images/logo.png" />
-            </center>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="username">Username:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="username" placeholder="Enter username" ng-model="vm.userDataRegistration.username" required>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="email">Email:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="email" placeholder="Enter email" title="Must be in the following order: characters@characters.domain" ng-model="vm.userDataRegistration.email" required>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="pwd">Password:</label>
-                <div class="col-sm-10">
-                    <input type="password" name="pw" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" class="form-control" id="password" placeholder="Enter password" ng-model="vm.userDataRegistration.password" required>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="pwd">Confirm password:</label>
-                <div class="col-sm-10">
-                    <input type="password" class="form-control" id="password" placeholder="Re-enter password" ng-model="vm.confirm_password" required>
-                </div>
-            </div>
-
-            <div class="form-group" id="registerBtn">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-default" id="loginBtn" ng-click="vm.registerUser()">Register</button>
-                </div>
-            </div>
-            <div ng-show="vm.messageFailedRegistration" class="alert alert-danger" role="alert">{{vm.messageFailedRegistration}}</div>
-            <div ng-show="vm.messageSuccessRegistration" class="alert alert-success" role="alert">{{vm.messageSuccessRegistration}}</div>
-        </form>
+    <div class="container"  ng-hide="vm.isLoggedIn">
+        <center>
+            <img src="images/logo.png" style='height: 40%; width: 40%; object-fit: contain'/>
+        </center>
+        <center>
+            <img src="images/water.png" style="padding-top: 10%; padding-bottom: 0;"/>
+        </center>
     </div>
 
     <!-- Wrapper -->
@@ -225,6 +193,11 @@
 <script>
 
     $(".glyphBtn").click(function () {
+
+        if (window.location.protocol == "http:") {
+            var restOfUrl = window.location.href.substr(5);
+            window.location = "https:" + restOfUrl;
+        }
 
         if ($(".mobileSideBarVisible").hasClass("sideBarHidden")) {
             $(".mobileSideBarVisible").removeClass("sideBarHidden");

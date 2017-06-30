@@ -62,20 +62,20 @@
                                                 <div class="panel-body">
                                                     <table class="table">
                                                         <thead>
-                                                            <tr>
-                                                                <td>Name</td>
-                                                                <td>Distance (KM)</td>
-                                                                <td>Period (Months)</td>
-                                                                <td>Description</td>
-                                                            </tr>
+                                                        <tr>
+                                                            <td>Name</td>
+                                                            <td>Distance (KM)</td>
+                                                            <td>Period (Months)</td>
+                                                            <td>Description</td>
+                                                        </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr ng-repeat="utility in ut.utilities">
-                                                                <td>{{ utility.UtilityName }}</td>
-                                                                <td>{{ utility.KmNo }}</td>
-                                                                <td>{{ utility.MonthsNo }}</td>
-                                                                <td>{{ utility.Description }}</td>
-                                                            </tr>
+                                                        <tr ng-repeat="utility in ut.utilities">
+                                                            <td>{{ utility.UtilityName }}</td>
+                                                            <td>{{ utility.KmNo }}</td>
+                                                            <td>{{ utility.MonthsNo }}</td>
+                                                            <td>{{ utility.Description }}</td>
+                                                        </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -86,6 +86,94 @@
                                         </div>
                                     </div>
 
+                                </div>
+                            </div>
+
+
+
+                            <!-- Trigger the modal with a button -->
+                            <button class="btn btn-default" data-toggle="modal" data-target="#updateModal{{car.CarID}}">Update</button>
+
+                            <!-- Modal -->
+                            <div id="updateModal{{car.CarID}}" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">Update details for {{ car.Brand }} {{ car.RegNo }} </h4>
+                                        </div>
+                                        <div class="modal-body" ng-controller="CarDetailsController as ctrlDet" ng-init="ctrlDet.initialize(car.CarID)">
+                                            <div class="panel panel-default" ng-controller="UserController as user">
+                                                <div class="panel-body">
+                                                    <form class="form-horizontal">
+                                                        <div class="form-group ">
+                                                            <label class="control-label col-sm-2">Registration Number:</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" class="form-control" placeholder="Registration Number" ng-model="ctrlDet.updateCar.RegNo" disabled>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group ">
+                                                            <label class="control-label col-sm-2">Brand:</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" class="form-control" placeholder="Brand" ng-model="ctrlDet.updateCar.Brand" disabled>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group ">
+                                                            <label class="control-label col-sm-2">Year:</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="number" min="1990" max="2020" class="form-control" placeholder="Year" ng-model="ctrlDet.updateCar.Year" disabled>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group ">
+                                                            <label class="control-label col-sm-2">KM:</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="number" min="0" class="form-control" placeholder="Kilometers" ng-model="ctrlDet.updateCar.KmNo" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-sm-2">Driver:</label>
+                                                            <div class="col-sm-8">
+                                                                <select class="form-control" ng-model="ctrlDet.updateCar.DriverID" disabled>
+                                                                    <option value="0" ng-selected="ctrlDet.verifyDriverId(0)"> - </option>
+                                                                    <option value="{{user.UserID}} " ng-repeat="user in user.users" ng-selected="ctrlDet.verifyDriverId(user.UserID)">{{ user.Username }}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <div class="col-sm-4 col-sm-offset-2">
+                                                                <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                                                                    <div class="btn-group" role="group">
+                                                                        <button class="btn btn-primary" ng-click="ctrlDet.updateCarDetails(); ctrlDet.reset();">Update car</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-sm-8 col-sm-offset-2">
+                                                                <div ng-if="ctrlDet.created == 'success'" class="alert alert-success" role="alert">{{ctrlDet.messageForm}}</div>
+                                                                <div ng-if="ctrlDet.created == 'fail'" class="alert alert-danger" role="alert">{{ctrlDet.messageForm}}</div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-8 col-sm-offset-2">
+                                                <div ng-if="ctrlDet.message" class="alert alert-info" role="alert">{{ctrlDet.message}}</div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="ctrlDet.reset(); ctrl.reset(); ctrl.reload()">Close</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
                         </td>

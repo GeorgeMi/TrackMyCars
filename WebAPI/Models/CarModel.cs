@@ -125,5 +125,20 @@ namespace WebAPI.Models
                 return false;
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<UtilityDTO> GetAllCarUtilities(int id)
+        {
+            try
+            {
+                return _bl.UtilityLogic.GetAllCarUtilities(id);
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }

@@ -1,5 +1,43 @@
 <div ng-controller="UserController as ctrl">
     <div class="panel panel-default">
+        <div class="panel-heading" data-toggle="collapse" data-target="#collapseAdd">Add new user</div>
+        <div class="panel-body collapse" id="collapseAdd">
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="username">Username:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="username" placeholder="Enter username" ng-model="ctrl.userDataRegistration.username" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="email">Email:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="email" placeholder="Enter email" title="Must be in the following order: characters@characters.domain" ng-model="ctrl.userDataRegistration.email" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="pwd">Password:</label>
+                    <div class="col-sm-10">
+                        <input type="password" name="pw" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" class="form-control" id="password" placeholder="Enter password" ng-model="ctrl.userDataRegistration.password" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="pwd">Confirm password:</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="password" placeholder="Re-enter password" ng-model="ctrl.confirm_password" required>
+                    </div>
+                </div>
+                <div class="form-group" id="registerBtn">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default" id="loginBtn" ng-click="ctrl.reset();ctrl.registerUser()">Add user</button>
+                    </div>
+                </div>
+                <div ng-show="ctrl.messageFailedRegistration" class="alert alert-danger" role="alert">{{ctrl.messageFailedRegistration}}</div>
+                <div ng-show="ctrl.messageSuccessRegistration" class="alert alert-success" role="alert">{{ctrl.messageSuccessRegistration}}</div>
+            </form>
+        </div>
+    </div>
+    <div class="panel panel-default">
         <div class="panel-heading">Search user</div>
         <div class="panel-body">
             <label class="control-label col-sm-2">Search:</label>
@@ -15,29 +53,29 @@
         <div class="panel-body">
             <table class="table">
                 <thead>
-                    <tr >
-                        <td>Username</td>
-                        <!-- <td class="mobileHidden">Password</td> -->
-                        <td class="mobileHidden">Email</td>
-                        <td>Role</td>
-                        <td>Actions</td>
-                    </tr>
+                <tr >
+                    <td>Username</td>
+                    <!-- <td class="mobileHidden">Password</td> -->
+                    <td class="mobileHidden">Email</td>
+                    <td>Role</td>
+                    <td>Actions</td>
+                </tr>
                 </thead>
                 <tbody >
-                    <tr ng-repeat="user in ctrl.users  | filter:searchText">
-                        <td>{{ user.Username }}</td>
-                       <!-- <td class="mobileHidden">{{ user.Password }}</td> -->
-                        <td class="mobileHidden">{{ user.Email }}</td>
-                        <td>{{ user.Role }}</td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="...">
-                                <button ng-if="user.Role =='admin'" class="btn btn-default" ng-click="ctrl.demote(user.UserID)" ng-disabled="ctrl.countAdminUsers()">Demote&nbsp;</button>
-                                <button ng-if="user.Role =='user'" class="btn btn-default" ng-click="ctrl.promote(user.UserID)">Promote</button>
-                                <button class="btn btn-default" ng-click="vm.changePage(ctrl.viewSendMessage(user.UserID, user.Username))">Send message</button>
-                                <button ng-if="user.Username != 'Admin'" class="btn btn-default" ng-click="ctrl.deleteUser(user.UserID)" ng-disabled="ctrl.countAdminUsers()">Delete</button>
-                            </div>
-                        </td>
-                    </tr>
+                <tr ng-repeat="user in ctrl.users  | filter:searchText">
+                    <td>{{ user.Username }}</td>
+                    <!-- <td class="mobileHidden">{{ user.Password }}</td> -->
+                    <td class="mobileHidden">{{ user.Email }}</td>
+                    <td>{{ user.Role }}</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button ng-if="user.Role =='admin'" class="btn btn-default" ng-click="ctrl.demote(user.UserID)" ng-disabled="ctrl.countAdminUsers()">Demote&nbsp;</button>
+                            <button ng-if="user.Role =='user'" class="btn btn-default" ng-click="ctrl.promote(user.UserID)">Promote</button>
+                            <button class="btn btn-default" ng-click="vm.changePage(ctrl.viewSendMessage(user.UserID, user.Username))">Send message</button>
+                            <button ng-if="user.Username != 'Admin'" class="btn btn-default" ng-click="ctrl.deleteUser(user.UserID)" ng-disabled="ctrl.countAdminUsers()">Delete</button>
+                        </div>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>

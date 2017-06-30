@@ -5,7 +5,7 @@
         .constant("appSettings",
         {
              serverPath: "https://trackmycarswebapi.azurewebsites.net/"
-            // serverPath: "http://localhost:19692"
+             //serverPath: "http://localhost:19692"
         });
 
 }());

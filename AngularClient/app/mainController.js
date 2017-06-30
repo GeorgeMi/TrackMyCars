@@ -25,13 +25,6 @@
             password: ''
         };
 
-        //data for registration
-        vm.userDataRegistration = {
-            username: '',
-            password: '',
-            email: ''
-        };
-
         vm.pagesArray = {
             current: '',
             last: ''
@@ -53,52 +46,6 @@
 
         vm.confirm_password = '';
         vm.tokenDataRegistration = $cookies.get('token');
-
-        //------------------register-----------------------
-        vm.registerUser = function () {
-
-            if (vm.userDataRegistration.email != '' && vm.userDataRegistration.email != null
-               && vm.userDataRegistration.username != '' && vm.userDataRegistration.username != null
-                && vm.userDataRegistration.password != '' && vm.userDataRegistration.password != null) {
-                //alert(vm.userDataRegistration.password);
-                vm.userDataRegistration.email = vm.userDataRegistration.email.replace(/ /g, '');
-                vm.userDataRegistration.username = vm.userDataRegistration.username.replace(/ /g, '');
-                vm.userDataRegistration.password = vm.userDataRegistration.password.replace(/ /g, '');
-            }
-
-            if (vm.userDataRegistration.email != '' && vm.userDataRegistration.email != null
-               && vm.userDataRegistration.username != '' && vm.userDataRegistration.username != null
-                && vm.userDataRegistration.password != '' && vm.userDataRegistration.password != null) {
-
-                if (vm.confirm_password == vm.userDataRegistration.password) {
-                    //start loading
-                    $rootScope.isLoadingRegister = true;
-
-                    userAccount.registration.registerUser(vm.userDataRegistration,
-
-                        function (response) {
-                            //inregistrarea a avut succes
-                            vm.messageSuccessRegistration = response.message;
-                            vm.messageFailedRegistration = '';
-                            vm.userData.username = vm.userDataRegistration.username;
-                            vm.userData.password = vm.userDataRegistration.password;
-                            //  vm.login();
-                            $rootScope.isLoadingRegister = false;
-                        },
-
-                        function (error) {
-                            //inregistrarea nu a avut succes
-                            vm.isLoggedIn = false;
-                            $rootScope.isLoadingRegister = false;
-                            vm.messageSuccessRegistration = '';
-                            vm.messageFailedRegistration = error.data.message;
-                        });
-                }
-                else {
-                    vm.messageFailedRegistration = "Passwords don't match";
-                }
-            }
-        }
 
         //-----------------login with username and password-----------------------
         vm.login = function () {

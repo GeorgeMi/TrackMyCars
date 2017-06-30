@@ -72,6 +72,31 @@ namespace WebAPI.Controllers
         }
 
         /// <summary>
+        /// </summary>
+        /// <param name="utilityDto"></param>
+        /// <returns>http status code OK sau ExpectationFailed</returns>
+        [RequireAdminToken]
+        public HttpResponseMessage Put(UtilityDTO utilityDto)
+        {
+            HttpResponseMessage responseMessage;
+            JSendMessage json;
+            var response = _utilityModel.UpdateUtility(utilityDto);
+
+            if (response)
+            {
+                json = new JSendMessage("success", "Utility details successfully updated");
+                responseMessage = Request.CreateResponse(HttpStatusCode.OK, json);
+            }
+            else
+            {
+                json = new JSendMessage("fail", "Something bad happened");
+                responseMessage = Request.CreateResponse(HttpStatusCode.BadRequest, json);
+            }
+
+            return responseMessage;
+        }
+
+        /// <summary>
         /// Stergerea unei categorii
         /// </summary>
         /// <param name="id"></param>

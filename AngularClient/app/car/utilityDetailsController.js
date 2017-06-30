@@ -12,6 +12,7 @@
         var vm = this;
 
         this.initialize = function (id) {
+
             var param = { car_id: id };
 
             utilityResource.getCarUtilities.getCarUtilities(param,

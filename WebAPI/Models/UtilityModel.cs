@@ -64,6 +64,24 @@ namespace WebAPI.Models
         /// <summary>
         ///  
         /// </summary>
+        /// <param name="utilityDto"></param>
+        /// <returns>true sau false</returns>
+        public bool UpdateUtility(UtilityDTO utilityDto)
+        {
+            try
+            {
+                _bl.UtilityLogic.UpdateUtility(utilityDto);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        ///  
+        /// </summary>
         /// <param name="utilityId"></param>
         /// <returns>true sau false</returns>
         public bool DeleteUtility(int utilityId)

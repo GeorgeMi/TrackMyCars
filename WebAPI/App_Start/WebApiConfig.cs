@@ -31,7 +31,7 @@ namespace WebAPI
 
             // Activeaza cross origin
             //var cors = new EnableCorsAttribute("*", "*", "*");
-            var cors = new EnableCorsAttribute("http://trackmycars.azurewebsites.net", "*", "*");
+            var cors = new EnableCorsAttribute("https://trackmycars.azurewebsites.net", "*", "*");
             config.EnableCors(cors);
         }
     }
