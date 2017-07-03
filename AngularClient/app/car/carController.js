@@ -15,6 +15,7 @@
         vm.Next = true; // se afiseaza "next page" la paginare
         vm.message = null;
         $rootScope.isLoading = true; //loading gif
+        vm.warning = false;
 
         //data form to send
         vm.addCar = {
@@ -69,7 +70,6 @@
                else {
                    vm.Next = true;
                }
-
            },
 
            function (error) {
@@ -164,6 +164,18 @@
             $cookies.remove('update_car');
             $cookies.put('update_car', id);
             return 'update_cars';
+        }
+
+        vm.refresh = function () {
+            setTimeout(function() {
+                vm.reset();
+            }, 24 * 3600 * 1000); // 1 day
+        }
+
+        vm.checkWarnings = function (days, km) {
+            if (days < 20 && km < 200) {
+                $('#myModal').modal('show');
+            }
         }
     }
 }());

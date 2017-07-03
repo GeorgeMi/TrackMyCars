@@ -23,7 +23,8 @@
                     vm.message = error.data.message;
                 }
             );
-        }      
+        }
+
     }
 
 }());
