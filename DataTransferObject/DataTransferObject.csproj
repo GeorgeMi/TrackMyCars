@@ -53,6 +53,7 @@
     <Compile Include="UsernameDTO.cs" />
     <Compile Include="UserRegistrationDTO.cs" />
     <Compile Include="CarUtilityDTO.cs" />
+    <Compile Include="UtilityCarDTO.cs" />
     <Compile Include="UtilityDTO.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

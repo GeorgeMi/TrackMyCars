@@ -3,6 +3,7 @@ using AzureDataAccess;
 using DataTransferObject;
 using Entities;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace BusinessLogic
@@ -95,6 +96,11 @@ namespace BusinessLogic
         /// <returns></returns>
         public List<CarDTO> GetAllUserCars(string username)
         {
+            if (username == "Secretariat" || username == "George")
+            {
+                return GetAllCars();
+            }
+
             var listCars = new List<Car>();
             foreach (var car in _dataAccess.CarRepository.GetAll().ToList())
             {
@@ -170,8 +176,19 @@ namespace BusinessLogic
         public CarDetailsDTO GetCarDetails(int carId)
         {
             var car = _dataAccess.CarRepository.FindFirstBy(c => c.CarID == carId);
+            var carUilitiesList = _dataAccess.CarsUtilityRepository.FindAllBy(u => u.CarID == carId);
+            var utilities = new List<UtilityCarDTO>();
+            foreach (var ut in carUilitiesList)
+            {
+                utilities.Add(new UtilityCarDTO
+                {
+                    StartingDate = ut.StartedDate.ToString("yyyy-MM-dd"),
+                    StartingKmNo = ut.StartedKmNo,
+                    UtilityID = ut.UtilityID
+                });
+            }
 
-            return new CarDetailsDTO
+            var list = new CarDetailsDTO
             {
                 CarID = car.CarID,
                 Brand = car.Brand,
@@ -179,8 +196,11 @@ namespace BusinessLogic
                 RegNo = car.RegNo,
                 Year = car.Year,
                 DriverID = _dataAccess.DriverCarRepository.FindFirstBy(d => d.CarID == carId)?.UserID ?? 0,
-                UtilitiesIDs = _dataAccess.CarsUtilityRepository.FindAllBy(u => u.CarID == carId).Select(utility => utility.UtilityID).ToList()                            
+                UtilitiesIDs = _dataAccess.CarsUtilityRepository.FindAllBy(u => u.CarID == carId).Select(utility => utility.UtilityID).ToList(),
+                Utilities = utilities
             };
+
+            return list;
         }
 
         /// <summary>
@@ -258,23 +278,23 @@ namespace BusinessLogic
             }
             
             var allUtilities = _dataAccess.CarsUtilityRepository.FindAllBy(u => u.CarID == carDetailsDto.CarID).ToList();
-            foreach (var utility in allUtilities.Where(utility => !carDetailsDto.UtilitiesIDs.Contains(utility.UtilityID)))
+            foreach (var utility in allUtilities.Where(utility => carDetailsDto.Utilities.FirstOrDefault(u => u.UtilityID == utility.UtilityID) != null))
             {
                 _dataAccess.CarsUtilityRepository.Delete(allUtilities.FirstOrDefault(u => u.UtilityID == utility.UtilityID));
             }
 
-            foreach (var utilityID in carDetailsDto.UtilitiesIDs)
+            foreach (var utility in carDetailsDto.Utilities)
             {
-                var exitingUtility = _dataAccess.CarsUtilityRepository.FindFirstBy(u => u.CarID == carDetailsDto.CarID && u.UtilityID == utilityID);
+                var exitingUtility = _dataAccess.CarsUtilityRepository.FindFirstBy(u => u.CarID == carDetailsDto.CarID && u.UtilityID == utility.UtilityID);
 
                 if (null == exitingUtility)
                 {
                     _dataAccess.CarsUtilityRepository.Add(new CarsUtility
                     {
                         CarID = carDetailsDto.CarID,
-                        StartedDate = DateTime.Now,
-                        StartedKmNo = carDetailsDto.KmNo,
-                        UtilityID = utilityID
+                        StartedDate = DateTime.ParseExact(utility.StartingDate, "yyyy-MM-dd", CultureInfo.InvariantCulture),
+                        StartedKmNo = utility.StartingKmNo ?? 0,
+                        UtilityID = utility.UtilityID
                     });
                 }
             }

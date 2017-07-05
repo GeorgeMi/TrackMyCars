@@ -9,7 +9,38 @@
         var param;
 
         vm.message = null;
+
+        vm.updateCar = {
+            RegNo: '',
+            Brand: '',
+            Year: '',
+            KmNo: '',
+            DriverID: 0,
+            UtilitiesIDs: [{}],
+            Utilities: [{}]
+        };
+
+        vm.utilities = null;
+
+        function getDateTime() {
+            var now = new Date();
+            var year = now.getFullYear();
+            var month = now.getMonth() + 1;
+            var day = now.getDate();
+
+            if (month.toString().length == 1) {
+                var month = '0' + month;
+            }
+            if (day.toString().length == 1) {
+                var day = '0' + day;
+            }
+
+            var dateTime = year + '-' + month + '-' + day;
+            return dateTime;
+        }
+
         $rootScope.isLoading = true; //loading gif
+        var i = 0;
         this.initialize = function (id) {
             param = { car_id: id };
 
@@ -17,6 +48,22 @@
             carResource.getCar.getCar(param,
                 function (response) {
                     vm.updateCar = response.data[0];
+
+                    vm.utilities = vm.updateCar.Utilities;
+
+                    var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+                    var today = new Date();
+
+                    if (vm.updateCar.Utilities != undefined) {
+                        for (var i = 0; i < vm.updateCar.Utilities.length; i++) {
+
+                            //vm.updateCar.Utilities[i].StartingDate;
+                            console.log(vm.updateCar.Utilities[i].StartingDate);
+                        }
+                    } else {
+                        vm.updateCar.Utilities[i].StartingDate = getDateTime();
+                    }
+                   
 
                     $rootScope.isLoading = false; //loading gif
                     vm.message = null;
@@ -33,14 +80,6 @@
             );
         }
 
-        vm.updateCar = {
-            RegNo: '',
-            Brand: '',
-            Year: '',
-            KmNo: '',
-            DriverID: 0,
-            UtilitiesIDs: [{}]
-        };
         vm.addCarMessage = '';
 
         vm.checkbox = function (utilityId) {
@@ -118,6 +157,41 @@
             vm.created = null;
             vm.message = null;
             $rootScope.isLoading = false;
+        }
+
+        vm.getStartingDate = function (id) {
+            if (vm.updateCar.Utilities != undefined) {
+                for (var i = 0; i < vm.updateCar.Utilities.length; i++) {
+                    if (vm.updateCar.Utilities[i].UtilityID == id) {
+                        return vm.updateCar.Utilities[i].StartingDate;
+                    }
+                }
+            }
+
+            return getDateTime();
+        }
+
+        vm.getStartingKmNo = function (id) {
+            if (vm.updateCar.Utilities != undefined) {
+                for (var i = 0; i < vm.updateCar.Utilities.length; i++) {
+                    if (vm.updateCar.Utilities[i].UtilityID == id) {
+                        return vm.updateCar.Utilities[i].StartingKmNo;
+                    }
+                }
+            }
+
+            return vm.updateCar.KmNo;
+        }
+
+        vm.syncStartingDate = function (id, value) {
+            console.log(value);
+            if (vm.updateCar.Utilities != undefined) {
+                for (var i = 0; i < vm.updateCar.Utilities.length; i++) {
+                    if (vm.updateCar.Utilities[i].UtilityID == id) {
+                        vm.updateCar.Utilities[i].StartingDate = value;
+                    }
+                }
+            }
         }
     }
 }());

@@ -96,7 +96,7 @@
 
                     <!-- Modal -->
                     <div id="updateModal{{car.CarID}}" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
+                        <div class="modal-dialog  modal-lg">
 
                             <!-- Modal content-->
                             <div class="modal-content">
@@ -160,20 +160,25 @@
                                                                 <td>Distance (KM)</td>
                                                                 <td>Period (Months)</td>
                                                                 <td>Description</td>
+                                                                <td>Starting date</td>
+                                                                <td>Starting KM</td>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
-                                                            <tr ng-repeat="utility in ut.utilities  | filter:searchText">
+                                                            <tr ng-repeat="utility in ut.utilities  | filter:searchText" ng-init="carUtilityDetail = ctrlDet.updateCar.Utilities[$index]">
                                                                 <td><input type="checkbox" ng-click="ctrlDet.checkbox(utility.UtilityID)" ng-checked="ctrlDet.verifyUtilityId(utility.UtilityID)"/>&nbsp;</td>
                                                                 <td>{{ utility.UtilityName }}</td>
                                                                 <td>{{ utility.KmNo }}</td>
                                                                 <td>{{ utility.MonthsNo }}</td>
                                                                 <td>{{ utility.Description }}</td>
+                                                                <td><input type="date" name="bday" min="1990-01-01" ng-model="carUtilityDetail.StartingDate"><br><br></td>
+                                                                <td><input type="number"></td>
                                                             </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
                                                 </div>
+
                                                 <div class="form-group">
                                                     <div class="col-sm-4 col-sm-offset-2">
                                                         <div class="btn-group btn-group-justified" role="group" aria-label="...">

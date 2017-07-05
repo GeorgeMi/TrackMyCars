@@ -9,6 +9,7 @@ namespace DataTransferObject
         public int Year { get; set; }
         public int KmNo { get; set; }
         public string Brand { get; set; }
+        public List<UtilityCarDTO> Utilities { get; set; }
         public List<int> UtilitiesIDs { get; set; }
         public int DriverID { get; set; }
     }

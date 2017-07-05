@@ -52,5 +52,15 @@
             }
         );
         }
+
+        vm.userIsSecretariat = function () {
+            var username = $cookies.get('username');
+            
+            if (username === 'George') {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 }());
