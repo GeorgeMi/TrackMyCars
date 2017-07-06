@@ -278,7 +278,7 @@ namespace BusinessLogic
             }
             
             var allUtilities = _dataAccess.CarsUtilityRepository.FindAllBy(u => u.CarID == carDetailsDto.CarID).ToList();
-            foreach (var utility in allUtilities.Where(utility => carDetailsDto.Utilities.FirstOrDefault(u => u.UtilityID == utility.UtilityID) != null))
+            foreach (var utility in allUtilities.Where(utility => !carDetailsDto.UtilitiesIDs.Contains(utility.UtilityID)))
             {
                 _dataAccess.CarsUtilityRepository.Delete(allUtilities.FirstOrDefault(u => u.UtilityID == utility.UtilityID));
             }

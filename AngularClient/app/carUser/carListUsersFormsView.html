@@ -26,7 +26,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="car in ctrl.userCars  | filter:searchText">
+                    <tr ng-repeat="car in ctrl.userCars  | filter:searchText" ng-init="ctrl.refresh()">
                         <td>{{ car.RegNo }}</td>
                         <td>{{ car.Brand }}</td>
                         <td class="mobileHidden">{{ car.Year }}</td>
@@ -35,7 +35,7 @@
                         <td class="mobileHidden" colspan="3">
                             <table class="table">
                                 <tbody>
-                                <tr ng-repeat="ut in car.Utilities">
+                                <tr ng-repeat="ut in car.Utilities" ng-init="ctrl.checkWarnings(ut.ExpirationDate,ut.ExpirationKmNo)">
                                     <td>{{ ut.UtilityName}}</td>
                                     <td>{{ ut.ExpirationDate}} days</td>
                                     <td>{{ ut.ExpirationKmNo}} km</td>
@@ -184,6 +184,26 @@
 
         <div class="col-sm-8 col-sm-offset-2">
             <div ng-if="ctrl.message" class="alert alert-info" role="alert">{{ctrl.message}}</div>
-        </div>      
+        </div>
+    </div>
+
+
+    <div id="myModal" class="warningModal modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Warning</h4>
+                </div>
+                <div class="modal-body">
+                    <p>One of the utilities is about to expire or has expired!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>

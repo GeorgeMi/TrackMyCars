@@ -1,7 +1,7 @@
 (function () {
     "use strict";
     var userManagementModule = angular.module("userManagement", ["common.services", "ngCookies"]);
-    var carManagementModule = angular.module("carManagement", ["common.services", "ngCookies"]);
+    var carManagementModule = angular.module("carManagement", ["common.services", "ngCookies", "ngDesktopNotification"]);
     var utilityManagementModule = angular.module("utilityManagement", ["common.services", "ngCookies"]);
     var contactManagementModule = angular.module("contactManagement", ["common.services", "ngCookies"]);
 

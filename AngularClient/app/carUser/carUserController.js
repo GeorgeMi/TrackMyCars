@@ -2,12 +2,14 @@
     "use strict";
     angular
         .module("carManagement")
-        .controller("CarUserController", ["carResource", "$cookies", "$rootScope", CarUserController]);
+        .controller("CarUserController", ["carResource", "$cookies", "$rootScope", "desktopNotification", CarUserController]);
 
-    function CarUserController(carResource, $cookies, $rootScope) {
+    function CarUserController(carResource, $cookies, $rootScope, desktopNotification) {
         var vm = this;
 
         $rootScope.isLoading = true; //loading gif
+
+        desktopNotification.requestPermission();
 
         var param = { username: $cookies.get('username') };
         //<-----------------load page----------------------> 
@@ -60,6 +62,23 @@
                 return true;
             } else {
                 return false;
+            }
+        }
+
+        vm.refresh = function () {
+            setTimeout(function () {
+                vm.reload();
+            }, 24 * 3600 * 1000); // 1 day 
+        }
+
+        vm.checkWarnings = function (days, km) {
+            if (days < 20 && km < 200) {
+                $('#myModal').modal('show');
+
+                desktopNotification.show('Warning', {
+                    body: 'One of the utilities is about to expire or has expired!',
+                    autoClose: false
+                });
             }
         }
     }

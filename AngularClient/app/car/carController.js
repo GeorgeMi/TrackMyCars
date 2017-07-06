@@ -2,9 +2,9 @@
     "use strict";
     angular
         .module("carManagement")
-        .controller("CarController", ["carResource", "$cookies", "$rootScope", "$window", CarController]);
+        .controller("CarController", ["carResource", "$cookies", "$rootScope", "$window", "desktopNotification", CarController]);
 
-    function CarController(carResource, $cookies, $rootScope, $window) {
+    function CarController(carResource, $cookies, $rootScope, $window, desktopNotification) {
         var vm = this;
 
         vm.created = false;
@@ -169,12 +169,17 @@
         vm.refresh = function () {
             setTimeout(function() {
                 vm.reset();
-            }, 24 * 3600 * 1000); // 1 day
+            }, 24 * 3600 * 1000); // 1 day 
         }
 
         vm.checkWarnings = function (days, km) {
             if (days < 20 && km < 200) {
                 $('#myModal').modal('show');
+
+                desktopNotification.show('Warning', {
+                    body: 'One of the utilities is about to expire or has expired!',
+                    autoClose: false                   
+                });
             }
         }
     }
