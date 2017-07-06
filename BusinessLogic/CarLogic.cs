@@ -289,10 +289,11 @@ namespace BusinessLogic
 
                 if (null == exitingUtility)
                 {
-                    _dataAccess.CarsUtilityRepository.Add(new CarsUtility
+               //     utility.StartingDate = utility.StartingDate.Replace("-", string.Empty);
+                        _dataAccess.CarsUtilityRepository.Add(new CarsUtility
                     {
                         CarID = carDetailsDto.CarID,
-                        StartedDate = DateTime.ParseExact(utility.StartingDate, "yyyy-MM-dd", CultureInfo.InvariantCulture),
+                        StartedDate = DateTime.ParseExact(utility.StartingDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None),
                         StartedKmNo = utility.StartingKmNo ?? 0,
                         UtilityID = utility.UtilityID
                     });

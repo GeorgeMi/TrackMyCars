@@ -4,6 +4,7 @@
  * Written by Miron George <george.miron2003@gmail.com>, 2016
  */
 
+using System;
 using Microsoft.Practices.Unity;
 using System.Collections.Generic;
 using DataTransferObject;
@@ -99,10 +100,10 @@ namespace WebAPI.Models
         {
             try
             {
-                _bl.CarLogic.UpdateCar(carDetailsDto);
-                return true;
+               _bl.CarLogic.UpdateCar(carDetailsDto);
+               return true;
             }
-            catch
+            catch(Exception ex)
             {
                 return false;
             }

@@ -96,7 +96,7 @@
 
                     <!-- Modal -->
                     <div id="updateModal{{car.CarID}}" class="modal fade" role="dialog">
-                        <div class="modal-dialog  modal-lg">
+                        <div class="modal-dialog modal-lg modal-xl ">
 
                             <!-- Modal content-->
                             <div class="modal-content">
@@ -171,8 +171,8 @@
                                                                 <td>{{ utility.KmNo }}</td>
                                                                 <td>{{ utility.MonthsNo }}</td>
                                                                 <td>{{ utility.Description }}</td>
-                                                                <td><input type="date" name="bday" min="1990-01-01" ng-model="carUtilityDetail.StartingDate"><br><br></td>
-                                                                <td><input type="number"></td>
+                                                                <td><input type="date" name="bday" id="dayUt{{utility.UtilityID}}Car{{car.CarID}}" min="1990-01-01" ng-value="ctrlDet.getStartingDate(utility.UtilityID)"><br><br></td>
+                                                                <td><input type="number" min="0" id="kmUt{{utility.UtilityID}}Car{{car.CarID}}"  ng-value="ctrlDet.getStartingKmNo(utility.UtilityID)"></td>
                                                             </tr>
                                                             </tbody>
                                                         </table>

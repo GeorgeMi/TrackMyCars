@@ -51,20 +51,6 @@
 
                     vm.utilities = vm.updateCar.Utilities;
 
-                    var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-                    var today = new Date();
-
-                    if (vm.updateCar.Utilities != undefined) {
-                        for (var i = 0; i < vm.updateCar.Utilities.length; i++) {
-
-                            //vm.updateCar.Utilities[i].StartingDate;
-                            console.log(vm.updateCar.Utilities[i].StartingDate);
-                        }
-                    } else {
-                        vm.updateCar.Utilities[i].StartingDate = getDateTime();
-                    }
-                   
-
                     $rootScope.isLoading = false; //loading gif
                     vm.message = null;
                 },
@@ -110,6 +96,22 @@
                 //alert('haha2');
                 $rootScope.isLoading = true;
 
+                vm.updateCar.Utilities = [{}];
+
+                if (vm.updateCar.UtilitiesIDs != undefined) {
+                    for (var i = 0; i < vm.updateCar.UtilitiesIDs.length; i++) {
+                        var obj = {
+                            UtilityID: vm.updateCar.UtilitiesIDs[i],
+                            StartingDate: document.getElementById("dayUt"+vm.updateCar.UtilitiesIDs[i]+"Car"+vm.updateCar.CarID).value,
+                            StartingKmNo: document.getElementById("kmUt" + vm.updateCar.UtilitiesIDs[i] + "Car" + vm.updateCar.CarID).value
+                        }
+
+                        vm.updateCar.Utilities.push(obj);
+                    }
+
+                    vm.updateCar.Utilities = vm.updateCar.Utilities.filter(value => Object.keys(value).length !== 0);
+                }
+
                 var x = JSON.stringify(vm.updateCar);
 
                 carResource.update.updateCarDetails(x,
@@ -120,7 +122,7 @@
                                 $rootScope.isLoading = false;                              
                             },
                             function (error) {
-                                vm.created = response.status;
+                                vm.created = error.data.status;
                                 vm.message = error.data.message;
                                 $rootScope.isLoading = false; //loading gif
                             });
@@ -129,7 +131,7 @@
                         vm.created = response.status;
                     },
                     function (error) {
-                        vm.created = response.status;
+                        vm.created = error.data.status;
                         vm.message = error.data.message;
                         $rootScope.isLoading = false; //loading gif
                     });
