@@ -50,8 +50,8 @@
        
         vm.addUtility = function () {
             if (vm.utility.UtilityName != '' && vm.utility.KmNo != '' && vm.utility.KmNo != '' && vm.utility.MonthsNo != '' && vm.utility.Description != '' && vm.utility.MonthsNo > -1 && vm.utility.KmNo > -1) {
-                vm.utility.UtilityName = vm.utility.UtilityName.replace(/ /g, '');
-                vm.utility.Description = vm.utility.Description.replace(/ /g, '');
+                vm.utility.UtilityName = vm.utility.UtilityName.replace(/  +/g, ' ');
+                vm.utility.Description = vm.utility.Description.replace(/  +/g, ' ');
 
                 if (isNaN(vm.utility.MonthsNo)) {
                     vm.utility.KmNo = vm.utility.KmNo.trim();
@@ -126,8 +126,8 @@
         vm.updateUtility = function () {
 
             if (vm.utility.UtilityName != '' && vm.utility.KmNo != '' && vm.utility.KmNo != '' && vm.utility.MonthsNo != '' && vm.utility.Description != '' && vm.utility.MonthsNo > -1 && vm.utility.KmNo > -1) {
-                vm.utility.UtilityName = vm.utility.UtilityName.replace(/ /g, '');
-                vm.utility.Description = vm.utility.Description.replace(/ /g, '');
+                vm.utility.UtilityName = vm.utility.UtilityName.replace(/  +/g, ' ');
+                vm.utility.Description = vm.utility.Description.replace(/  +/g, ' ');
 
                 if (isNaN(vm.utility.MonthsNo)) {
                     vm.utility.KmNo = vm.utility.KmNo.trim();
