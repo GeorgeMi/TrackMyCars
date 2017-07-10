@@ -68,7 +68,7 @@
         vm.refresh = function () {
             setTimeout(function () {
                 vm.reload();
-            }, 24 * 3600 * 1000); // 1 day 
+            }, 2 * 3600 * 1000); // 2 hours 
         }
 
         vm.checkWarnings = function (days, km) {

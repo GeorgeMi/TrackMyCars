@@ -235,7 +235,7 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="carDetailsDto"></param>
         public void UpdateCar(CarDetailsDTO carDetailsDto)
-        {
+        {         
             var car = new Car
             {
                 CarID = carDetailsDto.CarID,
@@ -289,14 +289,21 @@ namespace BusinessLogic
 
                 if (null == exitingUtility)
                 {
-               //     utility.StartingDate = utility.StartingDate.Replace("-", string.Empty);
-                        _dataAccess.CarsUtilityRepository.Add(new CarsUtility
+                    //     utility.StartingDate = utility.StartingDate.Replace("-", string.Empty);
+                    _dataAccess.CarsUtilityRepository.Add(new CarsUtility
                     {
                         CarID = carDetailsDto.CarID,
                         StartedDate = DateTime.ParseExact(utility.StartingDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None),
                         StartedKmNo = utility.StartingKmNo ?? 0,
                         UtilityID = utility.UtilityID
                     });
+                }
+                else
+                {
+                    exitingUtility.StartedDate = DateTime.ParseExact(utility.StartingDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None);
+                    exitingUtility.StartedKmNo = utility.StartingKmNo ?? exitingUtility.StartedKmNo;
+
+                    _dataAccess.CarsUtilityRepository.Update(exitingUtility);
                 }
             }
         }

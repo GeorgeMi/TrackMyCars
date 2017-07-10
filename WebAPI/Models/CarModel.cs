@@ -100,8 +100,8 @@ namespace WebAPI.Models
         {
             try
             {
-               _bl.CarLogic.UpdateCar(carDetailsDto);
-               return true;
+                _bl.CarLogic.UpdateCar(carDetailsDto);
+                return true;
             }
             catch(Exception ex)
             {
