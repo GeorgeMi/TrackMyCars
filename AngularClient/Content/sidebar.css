@@ -285,3 +285,7 @@ textarea {
         display: none !important;
     }
 }
+
+.details {
+    width: 20%;
+}

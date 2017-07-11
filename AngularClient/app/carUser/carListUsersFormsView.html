@@ -21,8 +21,8 @@
                         <td class="mobileHidden">Year</td>
                         <td class="mobileHidden">KM</td>
                         <td class="mobileHidden">Driver</td>
-                        <td class="mobileHidden">Utility Name</td>
-                        <td class="mobileHidden">Availability</td>
+                        <td class="mobileHidden details">Utility Name</td>
+                        <td class="mobileHidden details">Availability</td>
                     </tr>
                     </thead>
                     <tbody>
@@ -36,9 +36,9 @@
                             <table class="table">
                                 <tbody>
                                 <tr ng-repeat="ut in car.Utilities" ng-init="ctrl.checkWarnings(ut.ExpirationDate,ut.ExpirationKmNo)">
-                                    <td>{{ ut.UtilityName}}</td>
-                                    <td>{{ ut.ExpirationDate}} days</td>
-                                    <td>{{ ut.ExpirationKmNo}} km</td>
+                                    <td class="details">{{ ut.UtilityName}}</td>
+                                    <td class="details">{{ ut.ExpirationDate}} days</td>
+                                    <td class="details">{{ ut.ExpirationKmNo}} km</td>
                                 </tr>
                                 </tbody>
                             </table>
