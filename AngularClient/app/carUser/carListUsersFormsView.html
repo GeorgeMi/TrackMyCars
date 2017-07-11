@@ -13,24 +13,24 @@
         <div class="panel panel-default">
             <div class="panel-heading">My cars</div>
             <div class="panel-body">
-                <table class="table">
-                    <thead>
+                <table class="table table-responsive">
+                    <thead class="thead-default">
                     <tr>
-                        <td>Registration Number</td>
-                        <td>Brand</td>
-                        <td class="mobileHidden">Year</td>
-                        <td class="mobileHidden">KM</td>
-                        <td class="mobileHidden">Driver</td>
-                        <td class="mobileHidden details">Utility Name</td>
-                        <td class="mobileHidden details">Availability</td>
+                        <th>Registration Number</th>
+                        <th class="mobileHidden">Brand</th>
+                        <th class="mobileHidden">Year</th>
+                        <th>KM</th>
+                        <th class="mobileHidden">Driver</th>
+                        <th class="mobileHidden details">Utility Name</th>
+                        <th class="mobileHidden details">Availability</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="car in ctrl.userCars  | filter:searchText" ng-init="ctrl.refresh()">
                         <td>{{ car.RegNo }}</td>
-                        <td>{{ car.Brand }}</td>
+                        <td class="mobileHidden">{{ car.Brand }}</td>
                         <td class="mobileHidden">{{ car.Year }}</td>
-                        <td class="mobileHidden">{{ car.KmNo }}</td>
+                        <td>{{ car.KmNo }}</td>
                         <td class="mobileHidden">{{ car.Driver }}</td>
                         <td class="mobileHidden" colspan="3">
                             <table class="table">
@@ -43,7 +43,7 @@
                                 </tbody>
                             </table>
                         </td>
-                        <td class="mobileHidden" colspan="2">
+                        <td colspan="2">
                             <!-- Trigger the modal with a button -->
                             <button class="btn btn-default" data-toggle="modal" data-target="#myModal{{car.CarID}}" ng-click="" ng-if="car.Utilities.length >0">Details</button>
 
@@ -60,13 +60,13 @@
                                         <div class="modal-body">
                                             <div class="panel panel-default" ng-controller="UtilityDetailsController as ut" ng-init="ut.initialize(car.CarID)">
                                                 <div class="panel-body">
-                                                    <table class="table">
-                                                        <thead>
+                                                    <table class="table table-responsive">
+                                                        <thead class="thead-default">
                                                         <tr>
-                                                            <td>Name</td>
-                                                            <td>Distance (KM)</td>
-                                                            <td>Period (Months)</td>
-                                                            <td>Description</td>
+                                                            <th>Name</th>
+                                                            <th>Distance (KM)</th>
+                                                            <th>Period (Months)</th>
+                                                            <th>Description</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>

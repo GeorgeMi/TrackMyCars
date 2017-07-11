@@ -54,14 +54,14 @@
     <div class="panel panel-default">
         <div class="panel-heading">All utilities</div>
         <div class="panel-body">
-            <table class="table">
-                <thead>
+            <table class="table table-responsive">
+                <thead class="thead-default">
                     <tr>
-                        <td>Name</td>
-                        <td>Distance (KM)</td>
-                        <td>Period (Months)</td>
-                        <td>Description</td>
-                        <td>Action</td>
+                        <th>Name</th>
+                        <th>Distance (KM)</th>
+                        <th>Period (Months)</th>
+                        <th class="mobileHidden">Description</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,7 +69,7 @@
                         <td>{{ utility.UtilityName }}</td>
                         <td>{{ utility.KmNo }}</td>
                         <td>{{ utility.MonthsNo }}</td>
-                        <td>{{ utility.Description }}</td>
+                        <td class="mobileHidden">{{ utility.Description }}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="...">
                                 <button class="btn btn-default" ng-click="ut.deleteUtility(utility.UtilityID)">Delete</button>
